@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "809909609032",
+    "firebase_url": "https://health-awareness-74227.firebaseio.com",
+    "project_id": "health-awareness-74227",
+    "storage_bucket": "health-awareness-74227.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809909609032:android:7a87b4bdd36571403d2e7d",
+        "android_client_info": {
+          "package_name": "com.healthy.healthyaweaness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809909609032-s3ktdmha69vvi395gprkrf9s0pvnajqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcpeluHnSUeyKaDaKnQNoyAR3gdA-0oAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809909609032-s3ktdmha69vvi395gprkrf9s0pvnajqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
