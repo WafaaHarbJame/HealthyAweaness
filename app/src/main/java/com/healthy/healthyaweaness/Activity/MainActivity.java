@@ -33,12 +33,12 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.healthy.healthyaweaness.All.AnalyticsApplication;
+import com.healthy.healthyaweaness.DB.AnalyticsApplication;
 import com.healthy.healthyaweaness.All.CustomRecyclerScrollViewListener;
 import com.healthy.healthyaweaness.All.ItemTouchHelperClass;
 import com.healthy.healthyaweaness.All.RecyclerViewEmptySupport;
-import com.healthy.healthyaweaness.All.StoreRetrieveData;
-import com.healthy.healthyaweaness.All.ToDoItem;
+import com.healthy.healthyaweaness.DB.StoreRetrieveData;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.Service.TodoNotificationService;
 import com.healthy.healthyaweaness.R;
 
@@ -337,8 +337,8 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.aboutMeMenuItem:
-                Intent i = new Intent(this, AboutActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(this, AboutActivity.class);
+//                startActivity(i);
                 return true;
 //            case R.id.switch_themes:
 //                if(mTheme == R.style.CustomStyle_DarkTheme){
@@ -357,8 +357,8 @@ public class MainActivity extends BaseActivity {
 //                this.recreate();
 //                return true;
             case R.id.preferences:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, SettingsActivity.class);
+//                startActivity(intent);
                 return true;
 
             default:

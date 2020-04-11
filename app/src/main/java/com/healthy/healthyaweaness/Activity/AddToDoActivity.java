@@ -27,9 +27,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.healthy.healthyaweaness.All.AnalyticsApplication;
-import com.healthy.healthyaweaness.All.ToDoItem;
+import com.healthy.healthyaweaness.DB.AnalyticsApplication;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;

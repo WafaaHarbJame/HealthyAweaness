@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.franmontiel.localechanger.LocaleChanger;
+import com.healthy.healthyaweaness.DB.AnalyticsApplication;
 import com.healthy.healthyaweaness.Model.AppConstants;
 import com.healthy.healthyaweaness.Model.SharedPManger;
 import com.healthy.healthyaweaness.R;
@@ -28,15 +29,17 @@ import java.util.regex.Pattern;
 public class BaseActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SharedPManger sharedPManger;
-
     AwesomeProgressDialog awesomeProgressDialog;
     SharedPreferences sharedPreferences;
+    private AnalyticsApplication app;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = (AnalyticsApplication)getApplication();
+        app.send(this);
         sharedPManger=new SharedPManger(BaseActivity.this);
         sharedPreferences = getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
         Locale locale = new Locale("ar");

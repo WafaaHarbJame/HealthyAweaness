@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".All.AnalyticsApplication"
+        android:name=".DB.AnalyticsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,12 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".Activity.AddMedicineActivity"></activity>
-        <activity android:name=".Activity.ForgetPasswordActivity" />
+        <activity android:name=".Activity.AddMedicineActivity"
+            tools:ignore="InnerclassSeparator">
+        </activity>
+        <activity android:name=".Activity.ForgetPasswordActivity" android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name=".Activity.SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="InnerclassSeparator">
+        </activity>
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -28,7 +33,6 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,39 +42,27 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".Activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
         <activity
             android:name=".Activity.AddToDoActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activity.AboutActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".Activity.ReminderActivity"
+            android:name=".Activity.ReminderActivity" android:screenOrientation="portrait"
             android:label="@string/app_name" />
 
-        <service android:name=".Service.TodoNotificationService" />
+        <service android:name=".Service.TodoNotificationService"></service>
         <service android:name=".Service.DeleteNotificationService" />
 
-        <activity
-            android:name=".Activity.SettingsActivity"
-            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

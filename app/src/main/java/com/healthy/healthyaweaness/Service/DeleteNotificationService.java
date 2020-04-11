@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.healthy.healthyaweaness.Activity.MainActivity;
-import com.healthy.healthyaweaness.All.StoreRetrieveData;
-import com.healthy.healthyaweaness.All.ToDoItem;
-import com.healthy.healthyaweaness.Service.TodoNotificationService;
+import com.healthy.healthyaweaness.DB.StoreRetrieveData;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 
 import java.util.ArrayList;
 import java.util.UUID;

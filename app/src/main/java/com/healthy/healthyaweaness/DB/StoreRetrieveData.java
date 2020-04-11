@@ -1,6 +1,8 @@
-package com.healthy.healthyaweaness.All;
+package com.healthy.healthyaweaness.DB;
 
 import android.content.Context;
+
+import com.healthy.healthyaweaness.Model.ToDoItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;

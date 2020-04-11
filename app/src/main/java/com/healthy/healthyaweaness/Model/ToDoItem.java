@@ -1,4 +1,4 @@
-package com.healthy.healthyaweaness.All;
+package com.healthy.healthyaweaness.Model;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.healthy.healthyaweaness.All;
+package com.healthy.healthyaweaness.DB;
 
 import android.app.Application;
 import android.content.pm.PackageManager;

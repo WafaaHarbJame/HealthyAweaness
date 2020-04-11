@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.healthy.healthyaweaness.All.AnalyticsApplication;
-import com.healthy.healthyaweaness.All.StoreRetrieveData;
-import com.healthy.healthyaweaness.All.ToDoItem;
+import com.healthy.healthyaweaness.DB.AnalyticsApplication;
+import com.healthy.healthyaweaness.DB.StoreRetrieveData;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.Service.TodoNotificationService;
 import com.healthy.healthyaweaness.R;
 

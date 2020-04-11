@@ -1,4 +1,4 @@
-package com.healthy.healthyaweaness.All;
+package com.healthy.healthyaweaness.Model;
 
 import android.content.Context;
 import android.content.res.TypedArray;
