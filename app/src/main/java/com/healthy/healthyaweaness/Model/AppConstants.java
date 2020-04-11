@@ -20,5 +20,7 @@ public interface AppConstants {
     String User_date="User_date";
     String KEY_PHONE = "KEY_PHONE";
     String counter ="counter" ;
+    String code ="code" ;
+    String KEY_PHONE_without_code="KEY_PHONE_without_code";
     //----------------------------------------------------------------------------------------------
 }

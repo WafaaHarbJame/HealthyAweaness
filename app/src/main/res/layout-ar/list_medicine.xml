@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/listItemLinearLayout"
+    android:layout_marginBottom="1dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/listback"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/toDoListItemColorImageView"
+        android:gravity="center"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_free_medicine"
+        app:siBorderColor="@color/black"
+        app:siRadius="5dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+
+
+    <RelativeLayout
+        android:layout_marginStart="16dp"
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="?android:attr/listPreferredItemHeight">
+
+        <TextView
+            android:layout_alignParentTop="true"
+            tools:ignore="MissingPrefix"
+            android:id="@+id/Medicine_Name"
+            android:lines="1"
+            android:textDirection="rtl"
+            android:textSize="16sp"
+            android:text="@string/medicine_name"
+            android:textColor="?attr/colorAccent"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:layout_below="@id/Medicine_Name"
+            android:id="@+id/Medicine_Description"
+            android:text="@string/medicine_description"
+            android:textDirection="rtl"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/delete_Medicine"
+            android:src="@drawable/ic_delete">
+
+        </ImageView>
+    </RelativeLayout>
+
+
+</LinearLayout>

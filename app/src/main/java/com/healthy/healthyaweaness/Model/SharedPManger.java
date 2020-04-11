@@ -15,7 +15,7 @@ public class SharedPManger {
     public SharedPManger(Context context) {
         preferences = context.getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
 
-       // preferences = context.getSharedPreferences("smartZoneSettings", 0);
+        // preferences = context.getSharedPreferences("smartZoneSettings", 0);
     }
 
 

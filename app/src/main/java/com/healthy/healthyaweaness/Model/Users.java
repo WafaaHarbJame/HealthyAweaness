@@ -2,15 +2,21 @@ package com.healthy.healthyaweaness.Model;
 
 public class Users {
     String Username;
-    String Email;
-    String Passward;
+    String age;
+    private String Password;
     String Mobile;
 
     public Users() {
     }
 
-    public String getUsername() {
+    public Users(String username, String age, String password, String mobile) {
+        Username = username;
+        this.age = age;
+        Password = password;
+        Mobile = mobile;
+    }
 
+    public String getUsername() {
         return Username;
     }
 
@@ -18,20 +24,20 @@ public class Users {
         Username = username;
     }
 
-    public String getEmail() {
-        return Email;
+    public String getAge() {
+        return age;
     }
 
-    public void setEmail(String email) {
-        Email = email;
+    public void setAge(String age) {
+        this.age = age;
     }
 
-    public String getPassward() {
-        return Passward;
+    public String getPassword() {
+        return Password;
     }
 
-    public void setPassward(String passward) {
-        Passward = passward;
+    public void setPassword(String password) {
+        Password = password;
     }
 
     public String getMobile() {
@@ -39,13 +45,6 @@ public class Users {
     }
 
     public void setMobile(String mobile) {
-        Mobile = mobile;
-    }
-
-    public Users(String username, String email, String passward, String mobile) {
-        Username = username;
-        Email = email;
-        Passward = passward;
         Mobile = mobile;
     }
 }

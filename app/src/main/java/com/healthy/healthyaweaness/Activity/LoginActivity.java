@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.hbb20.CountryCodePicker;
+import com.healthy.healthyaweaness.MainActivity;
 import com.healthy.healthyaweaness.Model.AppConstants;
 import com.healthy.healthyaweaness.Model.SharedPManger;
 import com.healthy.healthyaweaness.R;
@@ -53,11 +54,11 @@ public class LoginActivity extends BaseActivity {
     private Button mButtonSignInSign;
     private Button mButtonSignInSignUp;
     private DatabaseReference mFirebaseDatabase;
-    private TextView mLoginvistor;
     private Button mAddingDataForAplication;
     private RadioButton mEnglishlang;
     private RadioButton mARABIClang;
     private RadioGroup mGroupradio;
+    int code=966;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,6 @@ public class LoginActivity extends BaseActivity {
         mForgetpassward = findViewById(R.id.forgetpassward);
         mButtonSignInSign = findViewById(R.id.buttonSignInSign);
         mButtonSignInSignUp = findViewById(R.id.buttonSignInSignUp);
-        mLoginvistor = findViewById(R.id.loginvistor);
         sharedPManger = new SharedPManger(getActiviy());
         FirebaseInstanceId.getInstance().getToken();
         FirebaseApp.initializeApp(this);
@@ -91,30 +91,29 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+
+         code=sharedPManger.getDataInt(AppConstants.code);
+        mCcp.setCountryForPhoneCode(code);
         mCcp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
                 select_country = true;
                 CountryCode = mCcp.getSelectedCountryCodeWithPlus();
+                code=mCcp.getSelectedCountryCodeAsInt();
+                sharedPManger.SetData(AppConstants.code,code);
             }
         });
 
 
 
-        mLoginvistor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, com.healthy.healthyaweaness.MainActivity.class);
-                startActivity(intent);
-            }
-        });
+      ;
         sharedPreferences = getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
         if (sharedPreferences != null) {
             if (!((sharedPreferences.getString(AppConstants.KEY_EMAIL, "")).isEmpty() && (sharedPreferences.getString(AppConstants.KEY_passward, "")).isEmpty() && (sharedPreferences.getString(AppConstants.KEY_PHONE, "")).isEmpty())) {
                 email = sharedPreferences.getString(AppConstants.KEY_EMAIL, "");
                 password = sharedPreferences.getString(AppConstants.KEY_passward, "");
-                phone = sharedPreferences.getString(AppConstants.KEY_PHONE, "");
-                mEtSignUpPhone.setText(phone);
+                String PHONE_without_code = sharedPreferences.getString(AppConstants.KEY_PHONE_without_code, "");
+                mEtSignUpPhone.setText(PHONE_without_code);
                 mEtSignInPassword.setText(password);
 
                 Intent intent = new Intent(LoginActivity.this, com.healthy.healthyaweaness.MainActivity.class);
@@ -147,9 +146,7 @@ public class LoginActivity extends BaseActivity {
 
 
                             if (dataSnapshot.exists()) {
-                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                                    comparepassward = String.valueOf(dataSnapshot.child("passward").getValue());
+                                    comparepassward = String.valueOf(dataSnapshot.child("password").getValue());
                                     String username = String.valueOf(dataSnapshot.child("username").getValue());
                                     sharedPManger.SetData(AppConstants.KEY_username, username);
 
@@ -157,8 +154,10 @@ public class LoginActivity extends BaseActivity {
                                         sharedPManger.SetData(AppConstants.KEY_PHONE, CountryCode + mEtSignUpPhone.getText().toString());
                                         sharedPManger.SetData(AppConstants.KEY_passward, mEtSignInPassword.getText().toString());
                                         sharedPManger.SetData(AppConstants.KEY_username, username);
-
                                         sharedPManger.SetData(AppConstants.ISLOGIN, true);
+
+                                        sharedPManger.SetData(AppConstants.KEY_PHONE_without_code, mEtSignUpPhone.getText().toString());
+
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         hideProgreesDilaog(getActiviy(), getString(R.string.login), getString(R.string.logintxt));
@@ -174,7 +173,7 @@ public class LoginActivity extends BaseActivity {
 
                                     hideProgreesDilaog(getActiviy(), getString(R.string.login), getString(R.string.logintxt));
 
-                                }
+
 
 
                             } else {

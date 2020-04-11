@@ -31,7 +31,7 @@ public class SignUpActivity extends BaseActivity {
     SharedPreferences sharedPreferences;
     SharedPManger sharedPManger;
     private EditText mEtSignUpFullName;
-    private EditText mEtSignUpEmail;
+    private EditText met_Age;
     private EditText mEtSignUpPassword;
     private EditText mEtSignUpConfirmPassword;
     private CountryCodePicker mCcp;
@@ -50,7 +50,7 @@ public class SignUpActivity extends BaseActivity {
 //        //هذة R.layout.activity_sign_up  الخاصة بتصميم الشاشة يمكنك الذهاب اليها بالضغط على ctrl+b لرؤية التصميم
 
         mEtSignUpFullName = findViewById(R.id.etSignUpFullName);
-        mEtSignUpEmail = findViewById(R.id.etSignUpEmail);
+        met_Age = findViewById(R.id.et_Age);
         mEtSignUpPassword = findViewById(R.id.etSignUpPassword);
         mEtSignUpConfirmPassword = findViewById(R.id.etSignUpConfirmPassword);
         mCcp = findViewById(R.id.ccp);
@@ -108,14 +108,9 @@ public class SignUpActivity extends BaseActivity {
                     mEtSignUpFullName.requestFocus();
 
 
-                } else if (mEtSignUpEmail.getText().toString().equals(null) || mEtSignUpEmail.getText().toString().equals("")) {
-                    mEtSignUpEmail.setError(getString(R.string.emailRequired));
-                    mEtSignUpEmail.requestFocus();
-
-                } else if (!isEmailValid(mEtSignUpEmail.getText().toString())) {
-                    mEtSignUpEmail.setError(getString(R.string.enter__correct_email));
-                    mEtSignUpEmail.requestFocus();
-
+                } else if (met_Age.getText().toString().equals(null) || met_Age.getText().toString().equals("")) {
+                    met_Age.setError(getString(R.string.met_Age_required));
+                    met_Age.requestFocus();
 
                 } else if (mEtSignUpPassword.getText().toString().equals(null) || mEtSignUpPassword.getText().toString().equals("")) {
                     mEtSignUpPassword.setError(getString(R.string.passwordRequired));
@@ -143,10 +138,11 @@ public class SignUpActivity extends BaseActivity {
 
                     final String name = mEtSignUpFullName.getText().toString();
                     final String id = mFirebaseDatabase.push().getKey();
-                    final String email = mEtSignUpEmail.getText().toString();
+                    final String Age = met_Age.getText().toString();
                     final String phone = CountryCode + mEtSignUpPhone.getText().toString();
 
-                    final Users users = new Users(mEtSignUpFullName.getText().toString(), mEtSignUpEmail.getText().toString(), mEtSignUpPassword.getText().toString(), CountryCode + mEtSignUpPhone.getText().toString());
+                    final Users users = new Users(mEtSignUpFullName.getText().toString(), Age,
+                            mEtSignUpPassword.getText().toString(), CountryCode + mEtSignUpPhone.getText().toString());
                     // البدء بفحص عملية التسجيل وتخزين البيانات في الفابيرس
 
                     mFirebaseDatabase.child(phone).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -154,7 +150,7 @@ public class SignUpActivity extends BaseActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 Toast.makeText(SignUpActivity.this, ""+getString(R.string.phone_numberexist), Toast.LENGTH_SHORT).show();
-                                mEtSignUpEmail.setText("");
+                                met_Age.setText("");
                                 mEtSignUpFullName.setText("");
                                 mEtSignUpPassword.setText("");
                                 mEtSignUpPhone.setText("");
@@ -163,13 +159,11 @@ public class SignUpActivity extends BaseActivity {
                             } else {
                                 mFirebaseDatabase.child(phone).setValue(users);
                                 Toast.makeText(SignUpActivity.this, getString(R.string.registersucess), Toast.LENGTH_SHORT).show();
-                                sharedPManger.SetData(AppConstants.KEY_EMAIL, mEtSignUpEmail.getText().toString());
                                 sharedPManger.SetData(AppConstants.KEY_passward, mEtSignUpPassword.getText().toString());
                                 sharedPManger.SetData(AppConstants.KEY_PHONE, CountryCode + mEtSignUpPhone.getText().toString());
                                 sharedPManger.SetData(AppConstants.KEY_username, mEtSignUpFullName.getText().toString());
                                 sharedPManger.SetData(AppConstants.ISLOGIN, true);
                                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                intent.putExtra(AppConstants.KEY_EMAIL, mEtSignUpEmail.getText().toString());
                                 intent.putExtra(AppConstants.KEY_passward, mEtSignUpPassword.getText().toString());
                                 intent.putExtra(AppConstants.KEY_PHONE, CountryCode + mEtSignUpPhone.getText().toString());
                                 intent.putExtra(AppConstants.KEY_username, mEtSignUpFullName.getText().toString());

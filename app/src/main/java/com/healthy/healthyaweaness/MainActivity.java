@@ -12,7 +12,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.healthy.healthyaweaness.Activity.BaseActivity;
 import com.healthy.healthyaweaness.Activity.LoginActivity;
+import com.healthy.healthyaweaness.Fragment.AboutFragment;
+import com.healthy.healthyaweaness.Fragment.AddingMedicineFragment;
 import com.healthy.healthyaweaness.Fragment.HomeFragment;
+import com.healthy.healthyaweaness.Fragment.MedicineListFragment;
 import com.healthy.healthyaweaness.Model.AppConstants;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -32,6 +35,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
     SharedPreferences.Editor editor_signUp;
     Toolbar toolbar;
     private Boolean saveLogin;
+    boolean GO_to_Medicine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +69,18 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
 
         }
+        GO_to_Medicine=getIntent().getBooleanExtra("GO_to_Medicine",false);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(), "HomeFragment").commit();
+        if(GO_to_Medicine){
+            toolbar.setTitle(getString(R.string.Medicine_list));
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicineListFragment(),
+                "HomeFragment").commit();
+        }
+        else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(),
+                    "HomeFragment").commit();
+
+        }
 
     }
 
@@ -77,14 +91,14 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
-
-
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+//
+//
+//        return true;
+//    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -95,25 +109,30 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
             toolbar.setTitle(getString(R.string.menu_home));
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(), "HomeFragment").commit();
 
-        } else if (id == R.id.nav_setting) {
+        }
 
-            toolbar.setTitle(getString(R.string.menu_setting));
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(), "HomeFragment").commit();
+        else if (id == R.id.nav_aboutapp) {
+
+            toolbar.setTitle(getString(R.string.menu_about));
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new AboutFragment(), "HomeFragment").commit();
 
         }
 
+        else if (id == R.id.nav_Medicine_list) {
 
+            toolbar.setTitle(getString(R.string.Medicine_list));
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicineListFragment(), "HomeFragment").commit();
+
+        }
         else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "share the app : https://play.google.com/store/apps/details?id=com.heartoftheworldapp.heartoftheworld");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "share the app : https://play.google.com/store/apps/details?id=com.healthy.healthyaweaness");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
 
-
         } else if (id == R.id.nav_exitapp) {
-            Toast("sss");
-
+            Toast("تم تسجيل الخروج بنجاح");
             if (saveLogin) {
                 editor_signUp = sharedPreferences.edit();
                 editor_signUp.clear();

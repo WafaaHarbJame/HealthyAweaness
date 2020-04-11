@@ -397,6 +397,7 @@ public class HomeFragment extends Fragment {
         public void onItemRemoved(final int position) {
             //Remove this line if not using Google Analytics
             app.send(getActivity(), "Action", "Swiped Todo Away");
+            String toShow = items.get(position).getToDoText();
 
             mJustDeletedToDoItem =  items.remove(position);
             mIndexOfDeletedToDoItem = position;
@@ -405,9 +406,8 @@ public class HomeFragment extends Fragment {
             notifyItemRemoved(position);
 
 //            String toShow = (mJustDeletedToDoItem.getToDoText().length()>20)?mJustDeletedToDoItem.getToDoText().substring(0, 20)+"...":mJustDeletedToDoItem.getToDoText();
-            String toShow = "Todo";
-            Snackbar.make(mCoordLayout, "Deleted "+toShow,Snackbar.LENGTH_SHORT)
-                    .setAction("UNDO", new View.OnClickListener() {
+            Snackbar.make(mCoordLayout, "تم الحذف  "+toShow,Snackbar.LENGTH_SHORT)
+                    .setAction("تراجع ", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 

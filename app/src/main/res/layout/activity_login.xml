@@ -43,6 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/activity_horizontal_margin_medium"
                 android:text="@string/signIn"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
 
@@ -119,13 +120,6 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/forgetPassword"
                 />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin_medium"
-                android:gravity="center"
-                android:text="@string/choose_lang"
-                />
 
             <Button
                 android:id="@+id/buttonSignInSign"
@@ -137,17 +131,6 @@
                 android:padding="@dimen/activity_vertical_margin_medium"
                 android:text="@string/login"
                 android:textColor="@android:color/white" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:id="@+id/loginvistor"
-                android:layout_marginTop="16dp"
-
-                android:text="@string/loginasvistor"
-                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

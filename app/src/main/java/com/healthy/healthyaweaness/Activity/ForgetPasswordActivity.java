@@ -98,7 +98,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                     mFirebaseDatabase.child(CountryCode + mEtPhoneNumber.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            dataSnapshot.getRef().child("passward").setValue(mEtSignUpPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            dataSnapshot.getRef().child("password").setValue(mEtSignUpPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(ForgetPasswordActivity.this, "تم تغير كلمة المرور بنجاح", Toast.LENGTH_SHORT).show();

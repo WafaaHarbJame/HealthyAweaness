@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
 import com.healthy.healthyaweaness.All.AnalyticsApplication;
 import com.healthy.healthyaweaness.All.ToDoItem;
 import com.healthy.healthyaweaness.R;
@@ -69,6 +70,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
     private LinearLayout mContainerLayout;
     private String theme;
     AnalyticsApplication app;
+    boolean adding_from_medicine;
 
     @Override
     protected void onResume() {
@@ -118,8 +120,9 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         }
 
 
-        mUserToDoItem = (ToDoItem)getIntent().getSerializableExtra(MainActivity.TODOITEM);
 
+
+        mUserToDoItem = (ToDoItem)getIntent().getSerializableExtra(MainActivity.TODOITEM);
         mUserEnteredText = mUserToDoItem.getToDoText();
         mUserHasReminder = mUserToDoItem.hasReminder();
         mUserReminderDate = mUserToDoItem.getToDoDate();
@@ -177,6 +180,12 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 //        imm.showSoftInput(mToDoTextBodyEditText, InputMethodManager.SHOW_IMPLICIT);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         mToDoTextBodyEditText.setSelection(mToDoTextBodyEditText.length());
+        adding_from_medicine=getIntent().getBooleanExtra("adding",false);
+        if(adding_from_medicine){
+            String Medcine_Name=getIntent().getStringExtra("medicine_Name");
+            mToDoTextBodyEditText.setText(Medcine_Name);
+
+        }
 
 
         mToDoTextBodyEditText.addTextChangedListener(new TextWatcher() {
@@ -252,7 +261,6 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         mDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Date date;
                 hideKeyboard(mToDoTextBodyEditText);
                 if(mUserToDoItem.getToDoDate()!=null){
@@ -267,14 +275,11 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-
                 DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(AddToDoActivity.this, year, month, day);
                 if(theme.equals(MainActivity.DARKTHEME)){
                     datePickerDialog.setThemeDark(true);
                 }
                 datePickerDialog.show(getFragmentManager(), "DateFragment");
-
             }
         });
 
@@ -282,7 +287,6 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         mTimeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Date date;
                 hideKeyboard(mToDoTextBodyEditText);
                 if(mUserToDoItem.getToDoDate()!=null){
