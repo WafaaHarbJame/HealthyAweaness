@@ -140,7 +140,7 @@ public class SignUpActivity extends BaseActivity {
                     mEtSignUpConfirmPassword.setError(getString(R.string.confirmPasswordRequired));
                     mEtSignUpConfirmPassword.requestFocus();
 
-
+                    
                 } else if (!mEtSignUpConfirmPassword.getText().toString().equals(mEtSignUpPassword.getText().toString())) {
 
                     mEtSignUpConfirmPassword.setError(getString(R.string.confirmPasswordNotMatchesPassword));
