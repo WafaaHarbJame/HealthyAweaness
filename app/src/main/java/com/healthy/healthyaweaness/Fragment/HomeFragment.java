@@ -17,6 +17,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -30,8 +31,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.franmontiel.localechanger.LocaleChanger;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.healthy.healthyaweaness.Activity.AddToDoActivity;
 import com.healthy.healthyaweaness.Activity.MainActivity;
 import com.healthy.healthyaweaness.Activity.ReminderActivity;
@@ -40,6 +45,8 @@ import com.healthy.healthyaweaness.All.CustomRecyclerScrollViewListener;
 import com.healthy.healthyaweaness.All.ItemTouchHelperClass;
 import com.healthy.healthyaweaness.All.RecyclerViewEmptySupport;
 import com.healthy.healthyaweaness.DB.StoreRetrieveData;
+import com.healthy.healthyaweaness.Model.AppConstants;
+import com.healthy.healthyaweaness.Model.SharedPManger;
 import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.Service.TodoNotificationService;
 import com.healthy.healthyaweaness.R;
@@ -86,6 +93,10 @@ public class HomeFragment extends Fragment {
     public static final String LIGHTTHEME = "com.avjindersekon.lighttheme";
     private AnalyticsApplication app;
     private String[] testStrings = {"Clean my room", "Water the plants", "Get car washed", "Get my dry cleaning"};
+    SharedPreferences sharedPreferences;
+    SharedPManger sharedPManger;
+    private DatabaseReference mFirebaseDatabase;
+    String Phone_with_plus;
 
 
     public static ArrayList<ToDoItem> getLocallyStoredData(StoreRetrieveData storeRetrieveData) {
@@ -129,6 +140,10 @@ public class HomeFragment extends Fragment {
         }
         getActivity().setTheme(mTheme);
 
+        sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
+        sharedPManger = new SharedPManger(getActivity());
+        Phone_with_plus=sharedPManger.getDataString("KEY_PHONE");
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("Alerts");;
 
 
 
@@ -172,34 +187,10 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 app.send(getActivity(), "Action", "FAB pressed");
                 Intent newTodo = new Intent(getActivity(), AddToDoActivity.class);
-                ToDoItem item = new ToDoItem("", false, null);
+                ToDoItem item = new ToDoItem("","", false, null);
                 int color = ColorGenerator.MATERIAL.getRandomColor();
                 item.setTodoColor(color);
-                //noinspection ResourceType
-//                String color = getResources().getString(R.color.primary_ligher);
                 newTodo.putExtra(TODOITEM, item);
-//                View decorView = getWindow().getDecorView();
-//                View navView= decorView.findViewById(android.R.id.navigationBarBackground);
-//                View statusView = decorView.findViewById(android.R.id.statusBarBackground);
-//                Pair<View, String> navBar ;
-//                if(navView!=null){
-//                    navBar = Pair.create(navView, navView.getTransitionName());
-//                }
-//                else{
-//                    navBar = null;
-//                }
-//                Pair<View, String> statusBar= Pair.create(statusView, statusView.getTransitionName());
-//                ActivityOptions options;
-//                if(navBar!=null){
-//                    options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, navBar, statusBar);
-//                }
-//                else{
-//                    options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, statusBar);
-//                }
-
-//                startActivity(new Intent(MainActivity.this, TestLayout.class), options.toBundle());
-//                startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM, options.toBundle());
-
                 startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM);
             }
         });
@@ -390,6 +381,7 @@ public class HomeFragment extends Fragment {
                     Collections.swap(items, i, i-1);
                 }
             }
+
             notifyItemMoved(fromPosition, toPosition);
         }
 
@@ -397,32 +389,40 @@ public class HomeFragment extends Fragment {
         public void onItemRemoved(final int position) {
             //Remove this line if not using Google Analytics
             app.send(getActivity(), "Action", "Swiped Todo Away");
+
             String toShow = items.get(position).getToDoText();
+            String id=items.get(position).getmALETER_ID();
+            Log.e("id","id"+id);
+            if(id!=null){
+                DeleteAletr(id);
+
+            }
 
             mJustDeletedToDoItem =  items.remove(position);
             mIndexOfDeletedToDoItem = position;
             Intent i = new Intent(getActivity(),TodoNotificationService.class);
+            //DeleteAletr(id);
             deleteAlarm(i, mJustDeletedToDoItem.getIdentifier().hashCode());
             notifyItemRemoved(position);
 
 //            String toShow = (mJustDeletedToDoItem.getToDoText().length()>20)?mJustDeletedToDoItem.getToDoText().substring(0, 20)+"...":mJustDeletedToDoItem.getToDoText();
-            Snackbar.make(mCoordLayout, "تم الحذف  "+toShow,Snackbar.LENGTH_SHORT)
-                    .setAction("تراجع ", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            //Comment the line below if not using Google Analytics
-                            app.send(getActivity(), "Action", "UNDO Pressed");
-                            items.add(mIndexOfDeletedToDoItem, mJustDeletedToDoItem);
-                            if(mJustDeletedToDoItem.getToDoDate()!=null && mJustDeletedToDoItem.hasReminder()){
-                                Intent i = new Intent(getActivity(), TodoNotificationService.class);
-                                i.putExtra(TodoNotificationService.TODOTEXT, mJustDeletedToDoItem.getToDoText());
-                                i.putExtra(TodoNotificationService.TODOUUID, mJustDeletedToDoItem.getIdentifier());
-                                createAlarm(i, mJustDeletedToDoItem.getIdentifier().hashCode(), mJustDeletedToDoItem.getToDoDate().getTime());
-                            }
-                            notifyItemInserted(mIndexOfDeletedToDoItem);
-                        }
-                    }).show();
+            Snackbar.make(mCoordLayout, "تم الحذف  "+toShow,Snackbar.LENGTH_SHORT).show();
+//                    .setAction("تراجع ", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            //Comment the line below if not using Google Analytics
+//                            app.send(getActivity(), "Action", "UNDO Pressed");
+//                            items.add(mIndexOfDeletedToDoItem, mJustDeletedToDoItem);
+//                            if(mJustDeletedToDoItem.getToDoDate()!=null && mJustDeletedToDoItem.hasReminder()){
+//                                Intent i = new Intent(getActivity(), TodoNotificationService.class);
+//                                i.putExtra(TodoNotificationService.TODOTEXT, mJustDeletedToDoItem.getToDoText());
+//                                i.putExtra(TodoNotificationService.TODOUUID, mJustDeletedToDoItem.getIdentifier());
+//                                createAlarm(i, mJustDeletedToDoItem.getIdentifier().hashCode(), mJustDeletedToDoItem.getToDoDate().getTime());
+//                            }
+//                            notifyItemInserted(mIndexOfDeletedToDoItem);
+//                        }
+//                    }).show();
         }
 
         @Override
@@ -528,6 +528,9 @@ public class HomeFragment extends Fragment {
                         ToDoItem item = items.get(ViewHolder.this.getAdapterPosition());
                         Intent i = new Intent(getActivity(), AddToDoActivity.class);
                         i.putExtra(TODOITEM, item);
+                        i.putExtra("ID",item.getmALETER_ID());
+                        i.putExtra("UPDATE",true);
+
                         startActivityForResult(i, REQUEST_ID_TODO_ITEM);
                     }
                 });
@@ -558,5 +561,23 @@ public class HomeFragment extends Fragment {
 
         super.onDestroy();
         mRecyclerView.removeOnScrollListener(customRecyclerScrollViewListener);
+    }
+
+    public void DeleteAletr(String id){
+
+        mFirebaseDatabase.child(Phone_with_plus).child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getActivity(), "تم الحذف بنجاح ", Toast.LENGTH_SHORT).show();
+//                    notifyDataSetChanged();
+////                                medicines.remove(position);
+//                    notifyDataSetChanged();
+//                    notifyItemRemoved(position);
+
+                }
+
+            }
+        });
     }
 }

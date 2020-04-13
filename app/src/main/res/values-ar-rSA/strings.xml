@@ -148,4 +148,7 @@
     <string name="UPDATE_MEDICINE">تعديل دواء</string>
     <string name="age">العمر</string>
     <string name="met_Age_required">العمر مطلوب</string>
+    <string name="fcm_message">fcm_message</string>
+    <string name="passwordHintnew">كلمة المرور الجديدة</string>
+    <string name="confirmPasswordnew">تأكيد كلمة المرور الجديدة</string>
 </resources>

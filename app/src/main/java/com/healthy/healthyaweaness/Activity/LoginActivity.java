@@ -79,9 +79,6 @@ public class LoginActivity extends BaseActivity {
 
         sharedPManger = new SharedPManger(LoginActivity.this);
 
-
-
-
         mCcp.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -90,7 +87,6 @@ public class LoginActivity extends BaseActivity {
                 return false;
             }
         });
-
 
          code=sharedPManger.getDataInt(AppConstants.code);
         mCcp.setCountryForPhoneCode(code);
@@ -104,9 +100,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-
-
-      ;
         sharedPreferences = getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
         if (sharedPreferences != null) {
             if (!((sharedPreferences.getString(AppConstants.KEY_EMAIL, "")).isEmpty() && (sharedPreferences.getString(AppConstants.KEY_passward, "")).isEmpty() && (sharedPreferences.getString(AppConstants.KEY_PHONE, "")).isEmpty())) {
@@ -140,14 +133,15 @@ public class LoginActivity extends BaseActivity {
                     final String password = mEtSignInPassword.getText().toString();
 
                     // فحص بيانات الدخول باستخدام الفابيرس
-                    mFirebaseDatabase.child(CountryCode + mEtSignUpPhone.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    mFirebaseDatabase.child(CountryCode + mEtSignUpPhone.getText().toString())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
                             if (dataSnapshot.exists()) {
-                                    comparepassward = String.valueOf(dataSnapshot.child("password").getValue());
-                                    String username = String.valueOf(dataSnapshot.child("username").getValue());
+                                    comparepassward = dataSnapshot.child("password").getValue().toString();
+                                    String username = dataSnapshot.child("username").getValue().toString();
                                     sharedPManger.SetData(AppConstants.KEY_username, username);
 
                                     if (password.matches(comparepassward)) {
@@ -155,9 +149,7 @@ public class LoginActivity extends BaseActivity {
                                         sharedPManger.SetData(AppConstants.KEY_passward, mEtSignInPassword.getText().toString());
                                         sharedPManger.SetData(AppConstants.KEY_username, username);
                                         sharedPManger.SetData(AppConstants.ISLOGIN, true);
-
                                         sharedPManger.SetData(AppConstants.KEY_PHONE_without_code, mEtSignUpPhone.getText().toString());
-
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         hideProgreesDilaog(getActiviy(), getString(R.string.login), getString(R.string.logintxt));

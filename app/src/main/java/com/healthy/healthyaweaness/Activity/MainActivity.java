@@ -112,6 +112,7 @@ public class MainActivity extends BaseActivity {
             editor.putBoolean(ReminderActivity.EXIT,false);
             editor.apply();
             finish();
+            finish();
         }
         /*
         We need to do this, as this activity's onCreate won't be called when coming back from SettingsActivity,
@@ -244,34 +245,10 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 app.send(this, "Action", "FAB pressed");
                 Intent newTodo = new Intent(MainActivity.this, AddToDoActivity.class);
-                ToDoItem item = new ToDoItem("", false, null);
+                ToDoItem item = new ToDoItem("","", false, null);
                 int color = ColorGenerator.MATERIAL.getRandomColor();
                 item.setTodoColor(color);
-                //noinspection ResourceType
-//                String color = getResources().getString(R.color.primary_ligher);
                 newTodo.putExtra(TODOITEM, item);
-//                View decorView = getWindow().getDecorView();
-//                View navView= decorView.findViewById(android.R.id.navigationBarBackground);
-//                View statusView = decorView.findViewById(android.R.id.statusBarBackground);
-//                Pair<View, String> navBar ;
-//                if(navView!=null){
-//                    navBar = Pair.create(navView, navView.getTransitionName());
-//                }
-//                else{
-//                    navBar = null;
-//                }
-//                Pair<View, String> statusBar= Pair.create(statusView, statusView.getTransitionName());
-//                ActivityOptions options;
-//                if(navBar!=null){
-//                    options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, navBar, statusBar);
-//                }
-//                else{
-//                    options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, statusBar);
-//                }
-
-//                startActivity(new Intent(MainActivity.this, TestLayout.class), options.toBundle());
-//                startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM, options.toBundle());
-
                 startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM);
             }
         });
@@ -433,7 +410,7 @@ public class MainActivity extends BaseActivity {
 
     public void makeUpItems(ArrayList<ToDoItem> items, int len){
         for (String testString : testStrings) {
-            ToDoItem item = new ToDoItem(testString, false, new Date());
+            ToDoItem item = new ToDoItem("",testString, false, new Date());
             //noinspection ResourceType
 //            item.setTodoColor(getResources().getString(R.color.red_secondary));
             items.add(item);

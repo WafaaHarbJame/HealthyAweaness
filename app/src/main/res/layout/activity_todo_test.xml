@@ -18,40 +18,42 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="?attr/colorPrimary"
                 android:id="@+id/editTextParentLinearLayout"
-                android:gravity="center"
-                android:layout_weight=".5"
-
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:layout_weight=".5"
+                android:background="?attr/colorPrimary"
+
+                android:gravity="center"
+                android:orientation="vertical">
 
 
                 <com.healthy.healthyaweaness.All.CustomTextInputLayout
-                    app:hintTextAppearance="@style/FloatingLabelTextAppearance"
                     android:id="@+id/toDoCustomTextInput"
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:textColorHint="@color/black"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center"
+                    android:textColorHint="@color/black"
+                    app:hintTextAppearance="@style/FloatingLabelTextAppearance">
+
                     <EditText
                         android:id="@+id/userToDoEditText"
-                        android:hint="@string/title"
-                        android:lines="2"
-                        android:inputType="textAutoCorrect|textCapSentences"
-                        android:maxLines="3"
-                        android:textColor="@color/icons"
-                        android:layout_marginEnd="32dp"
-                        android:layout_marginStart="32dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:hint="@string/title"
+                        android:inputType="textAutoCorrect|textCapSentences"
+                        android:lines="2"
+                        android:maxLines="3"
+                        android:textColor="@color/icons" />
 
-                </com.healthy.healthyaweaness.All.CustomTextInputLayout>>
+                </com.healthy.healthyaweaness.All.CustomTextInputLayout>
+                >
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/todoReminderAndDateContainerLayout"
                 android:layout_weight="1.5"

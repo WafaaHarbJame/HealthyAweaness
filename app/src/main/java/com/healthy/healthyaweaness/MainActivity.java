@@ -1,8 +1,12 @@
 package com.healthy.healthyaweaness;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -10,6 +14,7 @@ import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.healthy.healthyaweaness.Activity.BaseActivity;
 import com.healthy.healthyaweaness.Activity.LoginActivity;
 import com.healthy.healthyaweaness.Fragment.AboutFragment;
@@ -55,6 +60,8 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setItemIconTintList(null);
+        String fcm_token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("fcm_token","fcm_token"+fcm_token);
 
         Menu menu = navigationView.getMenu();
 
@@ -70,7 +77,15 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         }
         GO_to_Medicine=getIntent().getBooleanExtra("GO_to_Medicine",false);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId  = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.channel_name);
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
         if(GO_to_Medicine){
             toolbar.setTitle(getString(R.string.Medicine_list));
         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicineListFragment(),

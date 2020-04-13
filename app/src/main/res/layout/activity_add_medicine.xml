@@ -75,4 +75,18 @@
         android:padding="@dimen/activity_vertical_margin_medium"
         android:textColor="@android:color/white"
         android:text="@string/UPDATE_MEDICINE" />
+
+    <Button
+        android:id="@+id/alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_dark_boarder"
+        android:padding="@dimen/activity_vertical_margin_medium"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:text="@string/MedicineName_Requied" />
+
 </LinearLayout>

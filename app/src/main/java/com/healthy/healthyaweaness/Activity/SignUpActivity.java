@@ -34,6 +34,7 @@ public class SignUpActivity extends BaseActivity {
     private EditText met_Age;
     private EditText mEtSignUpPassword;
     private EditText mEtSignUpConfirmPassword;
+    private EditText mEtEmail;
     private CountryCodePicker mCcp;
     private EditText mEtSignUpPhone;
     private Button mButtonSignUpSign;
@@ -62,6 +63,8 @@ public class SignUpActivity extends BaseActivity {
         mBack = findViewById(R.id.back);
         sharedPreferences = getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
         sharedPManger = new SharedPManger(getActiviy());
+        mEtEmail = findViewById(R.id.et_Email);
+
 
         mCcp.setOnTouchListener(new View.OnTouchListener() {
 
@@ -112,7 +115,22 @@ public class SignUpActivity extends BaseActivity {
                     met_Age.setError(getString(R.string.met_Age_required));
                     met_Age.requestFocus();
 
-                } else if (mEtSignUpPassword.getText().toString().equals(null) || mEtSignUpPassword.getText().toString().equals("")) {
+                }
+                else if (mEtEmail.getText().toString().equals(null) || mEtEmail.getText().toString().equals("")) {
+                    mEtEmail.setError(getString(R.string.emailRequired));
+                    mEtEmail.requestFocus();
+
+                }
+
+                else if (!isEmailValid(mEtEmail.getText().toString()) ) {
+                    mEtEmail.setError(getString(R.string.enter__correct_email));
+                    mEtEmail.requestFocus();
+
+                }
+
+
+
+                else if (mEtSignUpPassword.getText().toString().equals(null) || mEtSignUpPassword.getText().toString().equals("")) {
                     mEtSignUpPassword.setError(getString(R.string.passwordRequired));
                     mEtSignUpPassword.requestFocus();
 
@@ -134,15 +152,14 @@ public class SignUpActivity extends BaseActivity {
                     mEtSignUpPhone.requestFocus();
 
                 } else {
-                    showProgreesDilaog(getActiviy(), getString(R.string.login), getString(R.string.logintxt));
-
+                    showProgreesDilaog(getActiviy(), getString(R.string.signUp), getString(R.string.signUptext));
                     final String name = mEtSignUpFullName.getText().toString();
                     final String id = mFirebaseDatabase.push().getKey();
                     final String Age = met_Age.getText().toString();
                     final String phone = CountryCode + mEtSignUpPhone.getText().toString();
 
                     final Users users = new Users(mEtSignUpFullName.getText().toString(), Age,
-                            mEtSignUpPassword.getText().toString(), CountryCode + mEtSignUpPhone.getText().toString());
+                            mEtSignUpPassword.getText().toString(), CountryCode + mEtSignUpPhone.getText().toString(),mEtEmail.getText().toString());
                     // البدء بفحص عملية التسجيل وتخزين البيانات في الفابيرس
 
                     mFirebaseDatabase.child(phone).addListenerForSingleValueEvent(new ValueEventListener() {

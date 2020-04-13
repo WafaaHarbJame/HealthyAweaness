@@ -202,10 +202,8 @@ public class MedicineListFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-
         if (requestCode == ADDing_code && resultCode == RESULT_OK) {
             //Write your code if there's no result
-
 
         }
     }

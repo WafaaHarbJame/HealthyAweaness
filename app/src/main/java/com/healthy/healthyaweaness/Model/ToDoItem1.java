@@ -7,10 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class ToDoItem implements Serializable{
+public class ToDoItem1 implements Serializable{
     private String mToDoText;
-    private String mALETER_ID;
-
     private boolean mHasReminder;
 //    private Date mLastEdited;
     private int mTodoColor;
@@ -22,21 +20,18 @@ public class ToDoItem implements Serializable{
     private static final String TODOCOLOR = "todocolor";
     private static final String TODODATE = "tododate";
     private static final String TODOIDENTIFIER = "todoidentifier";
-    private static final String ALETER_ID = "todoidentifier";
+    private String Task_id;
 
 
-
-    public ToDoItem(String ALETER_ID, String todoBody, boolean hasReminder, Date toDoDate){
+    public ToDoItem1(String todoBody, boolean hasReminder, Date toDoDate){
         mToDoText = todoBody;
         mHasReminder = hasReminder;
         mToDoDate = toDoDate;
         mTodoColor = 1677725;
         mTodoIdentifier = UUID.randomUUID();
-        mALETER_ID =ALETER_ID;
-
     }
 
-    public ToDoItem(JSONObject jsonObject) throws JSONException{
+    public ToDoItem1(JSONObject jsonObject) throws JSONException{
         mToDoText = jsonObject.getString(TODOTEXT);
         mHasReminder = jsonObject.getBoolean(TODOREMINDER);
         mTodoColor = jsonObject.getInt(TODOCOLOR);
@@ -65,22 +60,12 @@ public class ToDoItem implements Serializable{
     }
 
 
-
-
-    public ToDoItem(){
-        this(ALETER_ID,"Clean my room", true, new Date());
+    public ToDoItem1(){
+        this("Clean my room", true, new Date());
     }
 
     public String getToDoText() {
         return mToDoText;
-    }
-
-    public String getmALETER_ID() {
-        return mALETER_ID;
-    }
-
-    public void setmALETER_ID(String mALETER_ID) {
-        this.mALETER_ID = mALETER_ID;
     }
 
     public void setToDoText(String mToDoText) {

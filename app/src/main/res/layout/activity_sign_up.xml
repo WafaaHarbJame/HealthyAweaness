@@ -78,6 +78,19 @@
                 android:padding="@dimen/activity_vertical_margin_medium" />
 
             <EditText
+                android:id="@+id/et_Email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin_medium"
+                android:autofillHints=""
+                android:drawableStart="@drawable/ic_email_black_24dp"
+                android:background="@drawable/edit_text_boarder"
+                android:drawablePadding="@dimen/activity_vertical_margin_medium"
+                android:hint="@string/emailHint"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/activity_vertical_margin_medium" />
+
+            <EditText
                 android:id="@+id/etSignUpPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

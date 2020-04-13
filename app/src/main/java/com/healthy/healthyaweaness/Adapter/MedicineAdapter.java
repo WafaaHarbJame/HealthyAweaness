@@ -14,14 +14,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.healthy.healthyaweaness.Activity.AddMedicineActivity;
+import com.healthy.healthyaweaness.Activity.AddToDoActivity;
+import com.healthy.healthyaweaness.Activity.MainActivity;
 import com.healthy.healthyaweaness.DB.AnalyticsApplication;
 import com.healthy.healthyaweaness.Model.Medicine;
 import com.healthy.healthyaweaness.Model.SharedPManger;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.R;
 
 import java.util.List;
@@ -52,16 +56,26 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyHold
 
     }
 
+    public interface OnClickMedicine{
+        void onClick();
+    }
+
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_medicine,parent,false);
         MyHolder holder = new MyHolder(view);
+        context = parent.getContext();
+        app = (AnalyticsApplication)((Activity) context).getApplication();
+
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final MyHolder holder, final int position) {
         this.holder = holder;
+        app = (AnalyticsApplication)((Activity) context).getApplication();
+
         if (!(medicines.isEmpty())) {
             holder.Medicine_Name.setText(medicines.get(position).getMedicine_Name());
             holder.Medicine_Description.setText(medicines.get(position).getMedicine_Description());
@@ -88,6 +102,8 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyHold
 
         public MyHolder(View itemView) {
             super(itemView);
+            app = (AnalyticsApplication)((Activity) context).getApplication();
+
             Medicine_Name = itemView.findViewById(R.id.Medicine_Name);
             Medicine_Description = itemView.findViewById(R.id.Medicine_Description);
             cardView=itemView.findViewById(R.id.listItemLinearLayout);
@@ -95,8 +111,8 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyHold
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    app.send(this, "Action", "FAB pressed");
                     int position=getAdapterPosition();
+                    app.send(this, "Action", "FAB pressed");
                     Intent intent=new Intent(context, AddMedicineActivity.class);
                     intent.putExtra("medicine_Name",medicines.get(position).getMedicine_Name());
                     intent.putExtra("Medicine_Description",medicines.get(position).getMedicine_Description());
@@ -104,8 +120,25 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyHold
                     intent.putExtra("Update",true);
                     context.startActivity(intent);
 
+//                    app.send(context, "Action", "FAB pressed");
+//                    Intent newTodo = new Intent(context, AddToDoActivity.class);
+//                    newTodo.putExtra("medicine_Name",medicines.get(position).getMedicine_Name());
+//                    newTodo.putExtra("Medicine_Description",medicines.get(position).getMedicine_Description());
+//                    newTodo.putExtra("ID",medicines.get(position).getId());
+//                    newTodo.putExtra("Update",true);
+//                    newTodo.putExtra("adding",true);
+//                    ToDoItem item = new ToDoItem("","", true, null);
+//                    int color = ColorGenerator.MATERIAL.getRandomColor();
+//                    item.setTodoColor(color);
+//                    newTodo.putExtra(TODOITEM, item);
+//                       context.startActivity(newTodo);
+//                    ((Activity)(context)).startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM);
+
+
                 }
             });
+
+
 
             delete_Medicine.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,7 +167,36 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyHold
 
         }
 
+     public void onClick(){
+         int position=1;
+//                    app.send(this, "Action", "FAB pressed");
+//                    int position=getAdapterPosition();
+//                    Intent intent=new Intent(context, AddMedicineActivity.class);
+//                    intent.putExtra("medicine_Name",medicines.get(position).getMedicine_Name());
+//                    intent.putExtra("Medicine_Description",medicines.get(position).getMedicine_Description());
+//                    intent.putExtra("ID",medicines.get(position).getId());
+//                    intent.putExtra("Update",true);
+//                    context.startActivity(intent);
+
+         app.send(context, "Action", "FAB pressed");
+         Intent newTodo = new Intent(context, AddToDoActivity.class);
+         newTodo.putExtra("medicine_Name",medicines.get(position).getMedicine_Name());
+         newTodo.putExtra("Medicine_Description",medicines.get(position).getMedicine_Description());
+         newTodo.putExtra("ID",medicines.get(position).getId());
+         newTodo.putExtra("Update",true);
+         newTodo.putExtra("adding",true);
+         ToDoItem item = new ToDoItem("","", true, null);
+         int color = ColorGenerator.MATERIAL.getRandomColor();
+         item.setTodoColor(color);
+         newTodo.putExtra(TODOITEM, item);
+         context.startActivity(newTodo);
+         ((Activity)(context)).startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM);
+     }
+
+
+
     }
+
 
 
 

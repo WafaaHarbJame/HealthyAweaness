@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -23,10 +24,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.healthy.healthyaweaness.DB.AnalyticsApplication;
 import com.healthy.healthyaweaness.MainActivity;
 import com.healthy.healthyaweaness.Model.AppConstants;
 import com.healthy.healthyaweaness.Model.Medicine;
 import com.healthy.healthyaweaness.Model.SharedPManger;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.R;
 import com.healthy.healthyaweaness.databinding.ActivityAddMedicineBinding;
 
@@ -44,8 +47,15 @@ public class AddMedicineActivity extends BaseActivity {
     public String MedicineName,MedicineDescription;
     boolean Update;
     String id;
+    private AnalyticsApplication app;
+    private static final int REQUEST_ID_TODO_ITEM = 100;
+    public static final String TODOITEM = "com.healthy.healthyaweaness.Activity.AddMedicineActivity";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        app = (AnalyticsApplication)getApplication();
+
         super.onCreate(savedInstanceState);
         activityAddMedicineBinding=ActivityAddMedicineBinding.inflate(getLayoutInflater());
         View view=activityAddMedicineBinding.getRoot();
@@ -97,20 +107,34 @@ public class AddMedicineActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 MedicineName=activityAddMedicineBinding.MedicineName.getText().toString();
-                MedicineDescription=activityAddMedicineBinding.MedicineDescription.getText().toString();
-                id=getIntent().getStringExtra("ID");
-                if(activityAddMedicineBinding.MedicineName.getText().toString().matches("")){
-                    activityAddMedicineBinding.MedicineName.setError(getString(R.string.MedicineName_Requied));
-                    activityAddMedicineBinding.MedicineName.requestFocus();
-                }
-                else if(activityAddMedicineBinding.MedicineDescription.getText().toString().matches("")){
-                    activityAddMedicineBinding.MedicineDescription.setError(getString(R.string.MedicineDescription_Requied));
-                    activityAddMedicineBinding.MedicineDescription.requestFocus();
-                }
-                else {
-                    UpdateMedicine(MedicineName,MedicineDescription,id);
+        MedicineDescription=activityAddMedicineBinding.MedicineDescription.getText().toString();
+        id=getIntent().getStringExtra("ID");
+        if(activityAddMedicineBinding.MedicineName.getText().toString().matches("")){
+            activityAddMedicineBinding.MedicineName.setError(getString(R.string.MedicineName_Requied));
+            activityAddMedicineBinding.MedicineName.requestFocus();
+        }
+        else if(activityAddMedicineBinding.MedicineDescription.getText().toString().matches("")){
+            activityAddMedicineBinding.MedicineDescription.setError(getString(R.string.MedicineDescription_Requied));
+            activityAddMedicineBinding.MedicineDescription.requestFocus();
+        }
+        else {
+            UpdateMedicine(MedicineName,MedicineDescription,id);
 
-                }
+        }
+    }
+});
+
+
+        activityAddMedicineBinding.alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                app.send(this, "Action", "FAB pressed");
+//                Intent newTodo = new Intent(AddMedicineActivity.this, AddToDoActivity.class);
+//                ToDoItem item = new ToDoItem("", false, null);
+//                int color = ColorGenerator.MATERIAL.getRandomColor();
+//                item.setTodoColor(color);
+//                newTodo.putExtra(TODOITEM, item);
+//                startActivityForResult(newTodo, REQUEST_ID_TODO_ITEM);
             }
         });
         activityAddMedicineBinding.ADDMedicine.setOnClickListener(new View.OnClickListener() {
