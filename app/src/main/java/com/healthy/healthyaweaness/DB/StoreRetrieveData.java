@@ -2,6 +2,7 @@ package com.healthy.healthyaweaness.DB;
 
 import android.content.Context;
 
+import com.healthy.healthyaweaness.Model.MedicineItem;
 import com.healthy.healthyaweaness.Model.ToDoItem;
 
 import org.json.JSONArray;
@@ -36,6 +37,29 @@ public class StoreRetrieveData {
         return  jsonArray;
     }
 
+
+
+    public static JSONArray toJSONArrayMedcine(ArrayList<MedicineItem> items) throws JSONException{
+        JSONArray jsonArray = new JSONArray();
+        for(MedicineItem item : items){
+            JSONObject jsonObject = item.toJSON();
+            jsonArray.put(jsonObject);
+        }
+        return  jsonArray;
+    }
+
+
+    public void saveMedcineToFile(ArrayList<MedicineItem> items) throws JSONException, IOException{
+        FileOutputStream fileOutputStream;
+        OutputStreamWriter outputStreamWriter;
+        fileOutputStream = mContext.openFileOutput(mFileName, Context.MODE_PRIVATE);
+        outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+        outputStreamWriter.write(toJSONArrayMedcine(items).toString());
+        outputStreamWriter.close();
+        fileOutputStream.close();
+    }
+
+
     public void saveToFile(ArrayList<ToDoItem> items) throws JSONException, IOException{
         FileOutputStream fileOutputStream;
         OutputStreamWriter outputStreamWriter;
@@ -45,6 +69,8 @@ public class StoreRetrieveData {
         outputStreamWriter.close();
         fileOutputStream.close();
     }
+
+
 
     public ArrayList<ToDoItem> loadFromFile() throws IOException, JSONException{
         ArrayList<ToDoItem> items = new ArrayList<>();
@@ -81,5 +107,39 @@ public class StoreRetrieveData {
         }
         return items;
     }
+    public ArrayList<MedicineItem> loadFromFileMedcine() throws IOException, JSONException{
+        ArrayList<MedicineItem> items = new ArrayList<>();
+        BufferedReader bufferedReader = null;
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream =  mContext.openFileInput(mFileName);
+            StringBuilder builder = new StringBuilder();
+            String line;
+            bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            while((line = bufferedReader.readLine())!=null){
+                builder.append(line);
+            }
 
+            JSONArray jsonArray = (JSONArray)new JSONTokener(builder.toString()).nextValue();
+            for(int i =0; i<jsonArray.length();i++){
+                MedicineItem item = new MedicineItem(jsonArray.getJSONObject(i));
+                items.add(item);
+            }
+
+
+        } catch (FileNotFoundException fnfe) {
+            //do nothing about it
+            //file won't exist first time app is run
+        }
+        finally {
+            if(bufferedReader!=null){
+                bufferedReader.close();
+            }
+            if(fileInputStream!=null){
+                fileInputStream.close();
+            }
+
+        }
+        return items;
+    }
 }

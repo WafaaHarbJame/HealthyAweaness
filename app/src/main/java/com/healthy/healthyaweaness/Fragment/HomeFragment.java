@@ -187,7 +187,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 app.send(getActivity(), "Action", "FAB pressed");
                 Intent newTodo = new Intent(getActivity(), AddToDoActivity.class);
-                ToDoItem item = new ToDoItem("","", false, null);
+                ToDoItem item = new ToDoItem("","","", false, null);
                 int color = ColorGenerator.MATERIAL.getRandomColor();
                 item.setTodoColor(color);
                 newTodo.putExtra(TODOITEM, item);
@@ -530,7 +530,6 @@ public class HomeFragment extends Fragment {
                         i.putExtra(TODOITEM, item);
                         i.putExtra("ID",item.getmALETER_ID());
                         i.putExtra("UPDATE",true);
-
                         startActivityForResult(i, REQUEST_ID_TODO_ITEM);
                     }
                 });

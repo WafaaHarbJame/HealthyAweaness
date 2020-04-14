@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.healthy.healthyaweaness.Activity.AddMedicineActivity;
 import com.healthy.healthyaweaness.Activity.AddToDoActivity;
-import com.healthy.healthyaweaness.Activity.MainActivity;
 import com.healthy.healthyaweaness.DB.AnalyticsApplication;
 import com.healthy.healthyaweaness.Model.Medicine;
 import com.healthy.healthyaweaness.Model.SharedPManger;
@@ -185,7 +184,7 @@ public class MedicineAdapter extends RecyclerView.Adapter<MedicineAdapter.MyHold
          newTodo.putExtra("ID",medicines.get(position).getId());
          newTodo.putExtra("Update",true);
          newTodo.putExtra("adding",true);
-         ToDoItem item = new ToDoItem("","", true, null);
+         ToDoItem item = new ToDoItem("","","", true, null);
          int color = ColorGenerator.MATERIAL.getRandomColor();
          item.setTodoColor(color);
          newTodo.putExtra(TODOITEM, item);

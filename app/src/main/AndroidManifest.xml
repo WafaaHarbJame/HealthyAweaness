@@ -15,33 +15,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
+        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.AddMedicinrsActivity" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/social_care" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- [END fcm_default_icon] -->
+            android:resource="@color/colorAccent" /> <!-- [END fcm_default_icon] -->
         <!-- [START fcm_default_channel] -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
-        <activity android:name=".Activity.AddMedicine1Activity"></activity>
         <activity
             android:name=".Activity.AddMedicineActivity"
-            tools:ignore="InnerclassSeparator"></activity>
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activity.ForgetPasswordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            tools:ignore="InnerclassSeparator"></activity>
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -57,13 +59,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.AddToDoActivity"
             android:parentActivityName=".MainActivity"
@@ -76,7 +72,6 @@
 
         <service android:name=".Service.TodoNotificationService" />
         <service android:name=".Service.DeleteNotificationService" />
-
         <service
             android:name=".Fcm.MyFirebaseMessagingService"
             android:exported="false">

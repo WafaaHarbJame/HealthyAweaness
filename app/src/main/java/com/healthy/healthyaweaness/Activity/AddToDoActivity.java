@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.healthy.healthyaweaness.DB.AnalyticsApplication;
+import com.healthy.healthyaweaness.MainActivity;
 import com.healthy.healthyaweaness.Model.AppConstants;
 import com.healthy.healthyaweaness.Model.Medicine;
 import com.healthy.healthyaweaness.Model.SharedPManger;
@@ -115,11 +116,14 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         else{
             setTheme(R.style.CustomStyle_DarkTheme);
         }
+        //Need references to these to change them during light/dark mode
+
 
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_add_to_do);
         //Testing out a new layout
         setContentView(R.layout.activity_todo_test);
+
 
         //Show an X in place of <-
         final Drawable cross = getResources().getDrawable(R.drawable.ic_clear_white_24dp);
@@ -145,8 +149,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("Alerts");;
         alert_id=mFirebaseDatabase.push().getKey();
 
-        mUserToDoItem = (ToDoItem)getIntent().getSerializableExtra(MainActivity.TODOITEM);
-
+        mUserToDoItem = (ToDoItem)getIntent().getSerializableExtra(com.healthy.healthyaweaness.Activity.MainActivity.TODOITEM);
         mUserEnteredText = mUserToDoItem.getToDoText();
         mUserHasReminder = mUserToDoItem.hasReminder();
         mUserReminderDate = mUserToDoItem.getToDoDate();
@@ -163,11 +166,6 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 
         reminderIconImageButton = (ImageButton)findViewById(R.id.userToDoReminderIconImageButton);
         reminderRemindMeTextView = (TextView)findViewById(R.id.userToDoRemindMeTextView);
-        if(theme.equals(MainActivity.DARKTHEME)){
-            reminderIconImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_alarm_add_white_24dp));
-            reminderRemindMeTextView.setTextColor(Color.WHITE);
-        }
-
 
         mContainerLayout = (LinearLayout)findViewById(R.id.todoReminderAndDateContainerLayout);
         mUserDateSpinnerContainingLinearLayout = (LinearLayout)findViewById(R.id.toDoEnterDateLinearLayout);
@@ -301,9 +299,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(AddToDoActivity.this, year, month, day);
-                if(theme.equals(MainActivity.DARKTHEME)){
-                    datePickerDialog.setThemeDark(true);
-                }
+
                 datePickerDialog.show(getFragmentManager(), "DateFragment");
             }
         });
@@ -327,9 +323,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
                 int minute = calendar.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(AddToDoActivity.this, hour, minute, DateFormat.is24HourFormat(AddToDoActivity.this));
-                if(theme.equals(MainActivity.DARKTHEME)){
-                    timePickerDialog.setThemeDark(true);
-                }
+
                 timePickerDialog.show(getFragmentManager(), "TimeFragment");
             }
         });
@@ -383,9 +377,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         }
     }
 
-    private String getThemeSet(){
-        return getSharedPreferences(MainActivity.THEME_PREFERENCES, MODE_PRIVATE).getString(MainActivity.THEME_SAVED, MainActivity.LIGHTTHEME);
-    }
+
     public void hideKeyboard(EditText et){
 
         InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -522,7 +514,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
             addAletr(mUserEnteredText,mUserHasReminder,mUserReminderDate);
 
         }
-        i.putExtra(MainActivity.TODOITEM, mUserToDoItem);
+        i.putExtra(com.healthy.healthyaweaness.Activity.MainActivity.TODOITEM, mUserToDoItem);
         setResult(result, i);
     }
 
@@ -631,7 +623,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 
     public  void addAletr(String todoBody, boolean hasReminder,Date toDoDate){
 
-        final ToDoItem toDoItem = new ToDoItem(alert_id,todoBody,hasReminder,toDoDate);
+        final ToDoItem toDoItem = new ToDoItem(alert_id,"",todoBody,hasReminder,toDoDate);
         mFirebaseDatabase.child(Phone_with_plus).child(alert_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -675,7 +667,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 
     public  void UpdateAletr(final String alert_id, String todoBody, boolean hasReminder,Date toDoDate){
 
-        final ToDoItem toDoItem = new ToDoItem(alert_id,todoBody,hasReminder,toDoDate);
+        final ToDoItem toDoItem = new ToDoItem(alert_id,todoBody,"",hasReminder,toDoDate);
         mFirebaseDatabase.child(Phone_with_plus).child(alert_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

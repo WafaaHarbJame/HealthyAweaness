@@ -59,14 +59,6 @@ public class AddMedicineActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         activityAddMedicineBinding=ActivityAddMedicineBinding.inflate(getLayoutInflater());
         View view=activityAddMedicineBinding.getRoot();
-        theme = getSharedPreferences(com.healthy.healthyaweaness.Activity.MainActivity.THEME_PREFERENCES, MODE_PRIVATE).getString(com.healthy.healthyaweaness.Activity.MainActivity.THEME_SAVED, com.healthy.healthyaweaness.Activity.MainActivity.LIGHTTHEME);
-        if(theme.equals(com.healthy.healthyaweaness.Activity.MainActivity.LIGHTTHEME)){
-            setTheme(R.style.CustomStyle_LightTheme);
-            Log.d("OskarSchindler", "Light Theme");
-        }
-        else{
-            setTheme(R.style.CustomStyle_DarkTheme);
-        }
 
 
         setContentView(view);

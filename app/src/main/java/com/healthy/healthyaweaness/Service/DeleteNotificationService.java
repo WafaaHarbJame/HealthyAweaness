@@ -4,8 +4,8 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.healthy.healthyaweaness.Activity.MainActivity;
 import com.healthy.healthyaweaness.DB.StoreRetrieveData;
+import com.healthy.healthyaweaness.MainActivity;
 import com.healthy.healthyaweaness.Model.ToDoItem;
 
 import java.util.ArrayList;

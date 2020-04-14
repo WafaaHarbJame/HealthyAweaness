@@ -151,4 +151,5 @@
     <string name="fcm_message">fcm_message</string>
     <string name="passwordHintnew">كلمة المرور الجديدة</string>
     <string name="confirmPasswordnew">تأكيد كلمة المرور الجديدة</string>
+    <string name="no_medicine">"لا يوجد اي ادوية "</string>
 </resources>

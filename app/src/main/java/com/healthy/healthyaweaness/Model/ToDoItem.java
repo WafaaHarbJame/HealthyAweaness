@@ -10,6 +10,7 @@ import java.util.UUID;
 public class ToDoItem implements Serializable{
     private String mToDoText;
     private String mALETER_ID;
+    private String Medcibe_desc;
 
     private boolean mHasReminder;
 //    private Date mLastEdited;
@@ -23,16 +24,18 @@ public class ToDoItem implements Serializable{
     private static final String TODODATE = "tododate";
     private static final String TODOIDENTIFIER = "todoidentifier";
     private static final String ALETER_ID = "todoidentifier";
+    private static final String MEDCICNE_DES = "todoidentifier";
 
 
 
-    public ToDoItem(String ALETER_ID, String todoBody, boolean hasReminder, Date toDoDate){
+    public ToDoItem(String ALETER_ID, String todoBody,String MEDCICNE_DES, boolean hasReminder, Date toDoDate){
         mToDoText = todoBody;
         mHasReminder = hasReminder;
         mToDoDate = toDoDate;
         mTodoColor = 1677725;
         mTodoIdentifier = UUID.randomUUID();
         mALETER_ID =ALETER_ID;
+        Medcibe_desc=MEDCICNE_DES;
 
     }
 
@@ -53,6 +56,8 @@ public class ToDoItem implements Serializable{
     public JSONObject toJSON() throws JSONException{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(TODOTEXT, mToDoText);
+        jsonObject.put(ALETER_ID,mALETER_ID);
+        jsonObject.put(MEDCICNE_DES,Medcibe_desc);
         jsonObject.put(TODOREMINDER, mHasReminder);
 //        jsonObject.put(TODOLASTEDITED, mLastEdited.getTime());
         if(mToDoDate!=null){
@@ -68,7 +73,7 @@ public class ToDoItem implements Serializable{
 
 
     public ToDoItem(){
-        this(ALETER_ID,"Clean my room", true, new Date());
+        this(ALETER_ID,"Clean my room","", true, new Date());
     }
 
     public String getToDoText() {
@@ -111,6 +116,13 @@ public class ToDoItem implements Serializable{
         this.mToDoDate = mToDoDate;
     }
 
+    public String getMedcibe_desc() {
+        return Medcibe_desc;
+    }
+
+    public void setMedcibe_desc(String medcibe_desc) {
+        Medcibe_desc = medcibe_desc;
+    }
 
     public UUID getIdentifier(){
         return mTodoIdentifier;
