@@ -92,7 +92,8 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
     public String alert_id;
     public boolean update;
     String Alert_id_update;
-
+    public String MedicineName,MedicineDescription;
+    TextView mtitle;
     @Override
     protected void onResume() {
         super.onResume();
@@ -149,13 +150,31 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
         Phone_with_plus=sharedPManger.getDataString("KEY_PHONE");
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("Medicine");;
         alert_id=mFirebaseDatabase.push().getKey();
-
+        mContainerLayout = (LinearLayout)findViewById(R.id.todoReminderAndDateContainerLayout);
+        mUserDateSpinnerContainingLinearLayout = (LinearLayout)findViewById(R.id.toDoEnterDateLinearLayout);
+        mToDoTextBodyEditText = (EditText)findViewById(R.id.userToDoEditText);
+        mToDoDateSwitch = (SwitchCompat)findViewById(R.id.toDoHasDateSwitchCompat);
+//        mLastSeenTextView = (TextView)findViewById(R.id.toDoLastEditedTextView);
+        mToDoSendFloatingActionButton = findViewById(R.id.makeToDoFloatingActionButton);
+        mReminderTextView = (TextView)findViewById(R.id.newToDoDateTimeReminderTextView);
+        mMedicine_Description=findViewById(R.id.Medicine_Description);
+        mtitle=findViewById(R.id.title);
         mUserToDoItem = (MedicineItem)getIntent().getSerializableExtra(com.healthy.healthyaweaness.Activity.MainActivity.TODOITEM);
+        update=getIntent().getBooleanExtra("UPDATE",false);
+        Log.e("UPDATE","UPDATE"+update);
+
         mUserEnteredText = mUserToDoItem.getToDoText();
         mUserHasReminder = mUserToDoItem.hasReminder();
         mUserReminderDate = mUserToDoItem.getToDoDate();
         mUserColor = mUserToDoItem.getTodoColor();
         Alert_id_update=mUserToDoItem.getmALETER_ID();
+        MedicineDescription=mUserToDoItem.getMedcibe_desc();
+        Alert_id_update=mUserToDoItem.getmALETER_ID();
+
+        Log.e("UPDATE","UPDATE"+true);
+        Log.e("itemdesc","itemdesc"+MedicineDescription);
+
+
 
 //        if(mUserToDoItem.getLastEdited()==null) {
 //            mLastEdited = new Date();
@@ -168,14 +187,6 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
         reminderIconImageButton = (ImageButton)findViewById(R.id.userToDoReminderIconImageButton);
         reminderRemindMeTextView = (TextView)findViewById(R.id.userToDoRemindMeTextView);
 
-        mContainerLayout = (LinearLayout)findViewById(R.id.todoReminderAndDateContainerLayout);
-        mUserDateSpinnerContainingLinearLayout = (LinearLayout)findViewById(R.id.toDoEnterDateLinearLayout);
-        mToDoTextBodyEditText = (EditText)findViewById(R.id.userToDoEditText);
-        mToDoDateSwitch = (SwitchCompat)findViewById(R.id.toDoHasDateSwitchCompat);
-//        mLastSeenTextView = (TextView)findViewById(R.id.toDoLastEditedTextView);
-        mToDoSendFloatingActionButton = findViewById(R.id.makeToDoFloatingActionButton);
-        mReminderTextView = (TextView)findViewById(R.id.newToDoDateTimeReminderTextView);
-        mMedicine_Description=findViewById(R.id.Medicine_Description);
 
 
         mContainerLayout.setOnClickListener(new View.OnClickListener() {
@@ -206,9 +217,27 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
         mToDoTextBodyEditText.setSelection(mToDoTextBodyEditText.length());
         adding_from_medicine=getIntent().getBooleanExtra("adding",false);
         update=getIntent().getBooleanExtra("UPDATE",false);
-        if(adding_from_medicine){
-            String Medcine_Name=getIntent().getStringExtra("medicine_Name");
-            mToDoTextBodyEditText.setText(Medcine_Name);
+//        if(adding_from_medicine){
+//            MedicineDescription=getIntent().getStringExtra("Medicine_Description");
+//            mMedicine_Description.setText(MedicineDescription);
+//            Alert_id_update=getIntent().getStringExtra("ID");
+//            mMedicine_Description.setText(MedicineDescription);
+//            mtitle.setText(getString(R.string.UPDATE_MEDICINE));
+//            mToDoSendFloatingActionButton.setText(R.string.UPDATE_MEDICINE);
+//
+//        }
+
+        if(update){
+            alert_id=getIntent().getStringExtra("ID");
+            MedicineDescription=getIntent().getStringExtra("Medicine_Description");
+            mMedicine_Description.setText(MedicineDescription);
+            MedicineDescription=getIntent().getStringExtra("Medicine_Description");
+            mMedicine_Description.setText(MedicineDescription);
+            Alert_id_update=getIntent().getStringExtra("ID");
+            mMedicine_Description.setText(MedicineDescription);
+            mtitle.setText(getString(R.string.UPDATE_MEDICINE));
+            mToDoSendFloatingActionButton.setText(R.string.UPDATE_MEDICINE);
+
 
         }
 
@@ -264,7 +293,7 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
             @Override
             public void onClick(View v) {
                 if (mToDoTextBodyEditText.length() <= 0){
-                    mToDoTextBodyEditText.setError(getString(R.string.todo_error));
+                    mToDoTextBodyEditText.setError(getString(R.string.MedicineName_Requied));
                 }
                 else if(mUserReminderDate!=null && mUserReminderDate.before(new Date())){
                     app.send(this, "Action", "Date in the Past");
@@ -511,13 +540,30 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
         mUserToDoItem.setmALETER_ID(alert_id);
         mUserToDoItem.setMedcibe_desc(mMedicine_Description.getText().toString());
         if(update){
-            UpdateAletr(Alert_id_update,mUserEnteredText,mMedicine_Description.getText().toString(),mUserHasReminder,mUserReminderDate);
+            MedicineDescription=getIntent().getStringExtra("Medicine_Description");
+            mMedicine_Description.setText(MedicineDescription);
+            Alert_id_update=getIntent().getStringExtra("ID");
+            mMedicine_Description.setText(MedicineDescription);
+            mtitle.setText(getString(R.string.UPDATE_MEDICINE));
+            mToDoSendFloatingActionButton.setText(R.string.UPDATE_MEDICINE);
+            UpdateAletr(Alert_id_update,mToDoTextBodyEditText.getText().toString(),mMedicine_Description.getText().toString(),mUserHasReminder,mUserReminderDate);
 
         }
         else {
-            addAletr(mUserEnteredText,mMedicine_Description.getText().toString(),mUserHasReminder,mUserReminderDate);
+            addAletr(mToDoTextBodyEditText.getText().toString(),mMedicine_Description.getText().toString(),mUserHasReminder,mUserReminderDate);
 
         }
+
+
+
+
+
+
+
+
+
+
+
         i.putExtra(com.healthy.healthyaweaness.Activity.MainActivity.TODOITEM, mUserToDoItem);
         setResult(result, i);
     }

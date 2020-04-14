@@ -139,9 +139,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="app_Description">"يعتمد التطبيق على الفكرة الأساسية التي مفادها أن برنامجًا صحيًا فعالًا لمرضى السكر وضغط الدم لا يعلم المرض فحسب، بل أيضًا من خلال منحهم دورًا نشطًا للتحكم في طريقة الحياة. يهدف إلى السيطرة على مرض السكري وضغط الدم للحد من مضاعفاته في المجتمع.يركز البرنامج على:
  1-مواعيد الدواء وتنبيهات اسم الدواء.
-2 -تنبيهات التعيين بزيارة الطبيب كل شهر.
- 3 -يساعد المرضى على التواصل مع الآخرين الذين يعانون من نفس المرض.
-4 -نظام متابعة التمرينات الرياضية.
+2-تنبيهات التعيين بزيارة الطبيب كل شهر.
+ 3-يساعد المرضى على التواصل مع الآخرين الذين يعانون من نفس المرض.
+4-نظام متابعة التمرينات الرياضية.
     </string>
     <string name="MedicineName_Requied">اسم الدواء مطلوب</string>
     <string name="MedicineDescription_Requied">وصف الدواء مطلوب</string>
@@ -152,4 +152,6 @@
     <string name="passwordHintnew">كلمة المرور الجديدة</string>
     <string name="confirmPasswordnew">تأكيد كلمة المرور الجديدة</string>
     <string name="no_medicine">"لا يوجد اي ادوية "</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

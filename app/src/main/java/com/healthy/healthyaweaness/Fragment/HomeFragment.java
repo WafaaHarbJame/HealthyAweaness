@@ -2,11 +2,14 @@ package com.healthy.healthyaweaness.Fragment;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,8 +38,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.healthy.healthyaweaness.Activity.AddToDoActivity;
 import com.healthy.healthyaweaness.Activity.MainActivity;
 import com.healthy.healthyaweaness.Activity.ReminderActivity;
@@ -46,6 +52,7 @@ import com.healthy.healthyaweaness.All.ItemTouchHelperClass;
 import com.healthy.healthyaweaness.All.RecyclerViewEmptySupport;
 import com.healthy.healthyaweaness.DB.StoreRetrieveData;
 import com.healthy.healthyaweaness.Model.AppConstants;
+import com.healthy.healthyaweaness.Model.Medicine;
 import com.healthy.healthyaweaness.Model.SharedPManger;
 import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.Service.TodoNotificationService;
@@ -187,6 +194,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 app.send(getActivity(), "Action", "FAB pressed");
                 Intent newTodo = new Intent(getActivity(), AddToDoActivity.class);
+                newTodo.putExtra("Update",false);
                 ToDoItem item = new ToDoItem("","","", false, null);
                 int color = ColorGenerator.MATERIAL.getRandomColor();
                 item.setTodoColor(color);
@@ -264,22 +272,66 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStart() {
+        mToDoItemsArrayList.clear();
         app = (AnalyticsApplication)getActivity().getApplication();
         super.onStart();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
         if(sharedPreferences.getBoolean(CHANGE_OCCURED, false)){
 
             mToDoItemsArrayList = getLocallyStoredData(storeRetrieveData);
+
             adapter = new BasicListAdapter(mToDoItemsArrayList);
             mRecyclerView.setAdapter(adapter);
             setAlarms();
-
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(CHANGE_OCCURED, false);
 //            editor.commit();
             editor.apply();
 
+        }
 
+        if(mToDoItemsArrayList.isEmpty()){
+            ReadFromfirebase();
+        }
+
+
+
+
+    }
+
+    public void ReadFromfirebase(){
+
+        mToDoItemsArrayList.clear();
+        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            mFirebaseDatabase.child(Phone_with_plus).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot livenapshot:dataSnapshot.getChildren()) {
+                        ToDoItem medicinelistitem = livenapshot.getValue(ToDoItem.class);
+                        mToDoItemsArrayList.add(medicinelistitem);
+
+                        adapter = new BasicListAdapter(mToDoItemsArrayList);
+                        mRecyclerView.setAdapter(adapter);
+                        setAlarms();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(CHANGE_OCCURED, false);
+//            editor.commit();
+                        editor.apply();
+
+
+
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -303,6 +355,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //mToDoItemsArrayList.clear();
+        mToDoItemsArrayList.clear();
+
 
         if (resultCode != RESULT_CANCELED && requestCode == REQUEST_ID_TODO_ITEM) {
             ToDoItem item = (ToDoItem) data.getSerializableExtra(TODOITEM);
@@ -520,11 +575,13 @@ public class HomeFragment extends Fragment {
 //            int color = -1;
 
             public ViewHolder(View v){
+
                 super(v);
                 mView = v;
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         ToDoItem item = items.get(ViewHolder.this.getAdapterPosition());
                         Intent i = new Intent(getActivity(), AddToDoActivity.class);
                         i.putExtra(TODOITEM, item);

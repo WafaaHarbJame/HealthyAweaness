@@ -2,11 +2,14 @@ package com.healthy.healthyaweaness.Fragment;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,8 +39,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.healthy.healthyaweaness.Activity.AddMedicinrsActivity;
 import com.healthy.healthyaweaness.Activity.ReminderActivity;
 import com.healthy.healthyaweaness.All.CustomRecyclerScrollViewListener;
@@ -49,6 +55,7 @@ import com.healthy.healthyaweaness.MainActivity;
 import com.healthy.healthyaweaness.Model.AppConstants;
 import com.healthy.healthyaweaness.Model.MedicineItem;
 import com.healthy.healthyaweaness.Model.SharedPManger;
+import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.R;
 import com.healthy.healthyaweaness.Service.TodoNotificationService;
 import com.healthy.healthyaweaness.ui.home.HomeViewModel;
@@ -280,7 +287,48 @@ public class MedicinesListFragmentFragment extends Fragment {
 
 
             }
+
+
+            if(mToDoItemsArrayList.isEmpty()){
+                ReadFromfirebase();
+            }
         }
+
+    public void ReadFromfirebase(){
+
+        mToDoItemsArrayList.clear();
+        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            mFirebaseDatabase.child(Phone_with_plus).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot livenapshot:dataSnapshot.getChildren()) {
+                        MedicineItem medicinelistitem = livenapshot.getValue(MedicineItem.class);
+                        mToDoItemsArrayList.add(medicinelistitem);
+
+                        adapter = new BasicListAdapter(mToDoItemsArrayList);
+                        mRecyclerView.setAdapter(adapter);
+                        setAlarms();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(CHANGE_OCCURED, false);
+//            editor.commit();
+                        editor.apply();
+
+
+
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
 
         private void setAlarms(){
             if(mToDoItemsArrayList!=null){
@@ -302,6 +350,8 @@ public class MedicinesListFragmentFragment extends Fragment {
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
+
+            mToDoItemsArrayList.clear();
 
             if (resultCode != RESULT_CANCELED && requestCode == REQUEST_ID_TODO_ITEM) {
                 MedicineItem item = (MedicineItem) data.getSerializableExtra(TODOITEM);
@@ -528,6 +578,13 @@ public class MedicinesListFragmentFragment extends Fragment {
                             i.putExtra(MEDICINEitem, item);
                             i.putExtra("ID",item.getmALETER_ID());
                             i.putExtra("UPDATE",true);
+                            Log.e("UPDATE","UPDATE"+true);
+                            i.putExtra("ID",item.getmALETER_ID());
+                            i.putExtra("Medicine_Description",item.getMedcibe_desc());
+
+                            i.putExtra("UPDATE",true);
+                            Log.e("itemdesc","itemdesc"+item.getMedcibe_desc());
+
                             startActivityForResult(i, REQUEST_ID_TODO_ITEM);
                         }
                     });

@@ -204,9 +204,9 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         mToDoTextBodyEditText.setSelection(mToDoTextBodyEditText.length());
         adding_from_medicine=getIntent().getBooleanExtra("adding",false);
         update=getIntent().getBooleanExtra("UPDATE",false);
-        if(adding_from_medicine){
-            String Medcine_Name=getIntent().getStringExtra("medicine_Name");
-            mToDoTextBodyEditText.setText(Medcine_Name);
+        if(update){
+            alert_id=getIntent().getStringExtra("ID");
+
 
         }
 
@@ -495,6 +495,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         else{
             mUserToDoItem.setToDoText(mUserEnteredText);
         }
+
 //        mUserToDoItem.setLastEdited(mLastEdited);
         if(mUserReminderDate!=null){
             Calendar calendar = Calendar.getInstance();
@@ -505,17 +506,22 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         mUserToDoItem.setHasReminder(mUserHasReminder);
         mUserToDoItem.setToDoDate(mUserReminderDate);
         mUserToDoItem.setTodoColor(mUserColor);
+        mUserToDoItem.setMedcibe_desc("Description");
         mUserToDoItem.setmALETER_ID(alert_id);
         if(update){
+            Alert_id_update=getIntent().getStringExtra("ID");
             UpdateAletr(Alert_id_update,mUserEnteredText,mUserHasReminder,mUserReminderDate);
 
         }
         else {
-            addAletr(mUserEnteredText,mUserHasReminder,mUserReminderDate);
+            addAletr(mToDoTextBodyEditText.getText().toString(),mUserHasReminder,mUserReminderDate);
 
         }
         i.putExtra(com.healthy.healthyaweaness.Activity.MainActivity.TODOITEM, mUserToDoItem);
         setResult(result, i);
+
+
+
     }
 
     @Override
@@ -623,7 +629,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 
     public  void addAletr(String todoBody, boolean hasReminder,Date toDoDate){
 
-        final ToDoItem toDoItem = new ToDoItem(alert_id,"",todoBody,hasReminder,toDoDate);
+        final ToDoItem toDoItem = new ToDoItem(alert_id,todoBody,"Desc",hasReminder,toDoDate);
         mFirebaseDatabase.child(Phone_with_plus).child(alert_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -667,7 +673,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 
     public  void UpdateAletr(final String alert_id, String todoBody, boolean hasReminder,Date toDoDate){
 
-        final ToDoItem toDoItem = new ToDoItem(alert_id,todoBody,"",hasReminder,toDoDate);
+        final ToDoItem toDoItem = new ToDoItem(alert_id,todoBody,"Desc",hasReminder,toDoDate);
         mFirebaseDatabase.child(Phone_with_plus).child(alert_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
