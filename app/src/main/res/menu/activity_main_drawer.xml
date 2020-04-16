@@ -11,8 +11,8 @@
 
         <item
             android:id="@+id/nav_Medicine_list"
-            android:icon="@drawable/ic_free_medicine"
-            android:title="@string/Medicine_list" />
+            android:icon="@drawable/ic_gymnast"
+            android:title="@string/Pracctice" />
 
     </group>
 

@@ -394,7 +394,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
         reminderCalendar.set(year, month, day);
         
         if(reminderCalendar.before(calendar)){
-            Toast.makeText(this, "My time-machine is a bit rusty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ""+getString(R.string.date_error_check_again), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -514,10 +514,16 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
 
         }
         else {
-            addAletr(mToDoTextBodyEditText.getText().toString(),mUserHasReminder,mUserReminderDate);
+            if(!mToDoTextBodyEditText.getText().toString().isEmpty()){
+                addAletr(mToDoTextBodyEditText.getText().toString(),mUserHasReminder,mUserReminderDate);
+
+            }
 
         }
         i.putExtra(com.healthy.healthyaweaness.Activity.MainActivity.TODOITEM, mUserToDoItem);
+        i.putExtra("practice",true);
+        Log.e("practice","practice"+true);
+
         setResult(result, i);
 
 
@@ -541,8 +547,17 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
                     app.send(this, "Action", "Discard Todo");
                     makeResult(RESULT_CANCELED);
                     NavUtils.navigateUpFromSameTask(this);
+
                 }
+
                 hideKeyboard(mToDoTextBodyEditText);
+             Intent intent=new Intent(this,MainActivity.class);
+                intent.putExtra("practice",true);
+
+                startActivity(intent);
+             finish();
+               // onBackPressed();
+
                 return true;
 
             default:
@@ -640,7 +655,7 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
                             (new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(AddToDoActivity.this, "هذا التنبيه موجود  ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddToDoActivity.this, "هذا التنبيه  موجود  ", Toast.LENGTH_SHORT).show();
 
                         }
                     });

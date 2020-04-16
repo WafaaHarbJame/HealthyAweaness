@@ -9,9 +9,9 @@
 
     <string name="home_second">Home Second</string>
 
-    <string name="no_to_dos">لا يوجد لديك اي تنبيهات </string>
+    <string name="no_to_dos">لا يوجد لديك اي تنبيهات مضافة للتمارين </string>
 
-    <string name="title">عنوان التنبيه </string>
+    <string name="title">عنوان التمرين  </string>
 
     <string name="remind_me">ذكرني</string>
 
@@ -151,7 +151,8 @@
     <string name="fcm_message">fcm_message</string>
     <string name="passwordHintnew">كلمة المرور الجديدة</string>
     <string name="confirmPasswordnew">تأكيد كلمة المرور الجديدة</string>
-    <string name="no_medicine">"لا يوجد اي ادوية "</string>
+    <string name="no_medicine">"لا يوجد اي ادوية مضافة للتنبيه "</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Pracctice">التمارين</string>
 
 </resources>

@@ -65,8 +65,8 @@ public class MainActivity extends BaseActivity {
     private int mIndexOfDeletedToDoItem;
     public static final String DATE_TIME_FORMAT_12_HOUR = "MMM d, yyyy  h:mm a";
     public static final String DATE_TIME_FORMAT_24_HOUR = "MMM d, yyyy  k:mm";
-    public static final String FILENAME = "todoitems.json";
-    public static final String FILENAME_Medicne = "MEDICINE_items.json";
+    public static final String FILENAME = "MEDICINE_items";
+    public static final String FILENAME_practice = "todoitems.json";
 
     private StoreRetrieveData storeRetrieveData;
     public ItemTouchHelper itemTouchHelper;

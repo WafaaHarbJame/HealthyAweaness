@@ -151,9 +151,6 @@ public class HomeFragment extends Fragment {
         sharedPManger = new SharedPManger(getActivity());
         Phone_with_plus=sharedPManger.getDataString("KEY_PHONE");
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("Alerts");;
-
-
-
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(CHANGE_OCCURED, false);
@@ -272,7 +269,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStart() {
-        mToDoItemsArrayList.clear();
+       // mToDoItemsArrayList.clear();
         app = (AnalyticsApplication)getActivity().getApplication();
         super.onStart();
         final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
@@ -290,9 +287,9 @@ public class HomeFragment extends Fragment {
 
         }
 
-        if(mToDoItemsArrayList.isEmpty()){
-            ReadFromfirebase();
-        }
+//        if(mToDoItemsArrayList.isEmpty()){
+//            ReadFromfirebase();
+//        }
 
 
 
@@ -356,7 +353,7 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //mToDoItemsArrayList.clear();
-        mToDoItemsArrayList.clear();
+        //mToDoItemsArrayList.clear();
 
 
         if (resultCode != RESULT_CANCELED && requestCode == REQUEST_ID_TODO_ITEM) {

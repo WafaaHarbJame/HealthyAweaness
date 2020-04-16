@@ -426,7 +426,7 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
         reminderCalendar.set(year, month, day);
 
         if(reminderCalendar.before(calendar)){
-            Toast.makeText(this, "My time-machine is a bit rusty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, ""+getString(R.string.date_error_check_again), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -585,16 +585,17 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
                     app.send(this, "Action", "Discard Todo");
                     makeResult(RESULT_CANCELED);
                     NavUtils.navigateUpFromSameTask(this);
-
                 }
-                finish();
                 hideKeyboard(mToDoTextBodyEditText);
+                               finish();
+
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     public static String formatDate(String formatString, Date dateToFormat){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatString);

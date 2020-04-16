@@ -149,7 +149,7 @@ public class MedicinesListFragmentFragment extends Fragment {
             sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_FILE, MODE_PRIVATE);
             sharedPManger = new SharedPManger(getActivity());
             Phone_with_plus=sharedPManger.getDataString("KEY_PHONE");
-            mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("Alerts");;
+            mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("Medicine");;
 
 
 
@@ -288,15 +288,15 @@ public class MedicinesListFragmentFragment extends Fragment {
 
             }
 
-
-            if(mToDoItemsArrayList.isEmpty()){
-                ReadFromfirebase();
-            }
+//
+//            if(mToDoItemsArrayList.isEmpty()){
+//                ReadFromfirebase();
+//            }
         }
 
     public void ReadFromfirebase(){
 
-        mToDoItemsArrayList.clear();
+       // mToDoItemsArrayList.clear();
         ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 
@@ -351,7 +351,7 @@ public class MedicinesListFragmentFragment extends Fragment {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);
 
-            mToDoItemsArrayList.clear();
+//       mToDoItemsArrayList.clear();
 
             if (resultCode != RESULT_CANCELED && requestCode == REQUEST_ID_TODO_ITEM) {
                 MedicineItem item = (MedicineItem) data.getSerializableExtra(TODOITEM);
@@ -476,7 +476,7 @@ public class MedicinesListFragmentFragment extends Fragment {
 
             @Override
             public BasicListAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_circle_try, parent, false);
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_medicine_try, parent, false);
                 return new BasicListAdapter.ViewHolder(v);
             }
 
@@ -512,6 +512,8 @@ public class MedicinesListFragmentFragment extends Fragment {
                 }
                 holder.mToDoTextview.setText(item.getToDoText());
                 holder.mToDoTextview.setTextColor(todoTextColor);
+                holder.mtodoListItemTimeDesc.setText(item.getMedcibe_desc());
+
 //            holder.mColorTextView.setBackgroundColor(Color.parseColor(item.getTodoColor()));
 
 //            TextDrawable myDrawable = TextDrawable.builder().buildRoundRect(item.getToDoText().substring(0,1),Color.RED, 10);
@@ -565,6 +567,8 @@ public class MedicinesListFragmentFragment extends Fragment {
                 //            TextView mColorTextView;
                 ImageView mColorImageView;
                 TextView mTimeTextView;
+                TextView mtodoListItemTimeDesc;
+
 //            int color = -1;
 
                 public ViewHolder(View v){
@@ -593,6 +597,8 @@ public class MedicinesListFragmentFragment extends Fragment {
 //                mColorTextView = (TextView)v.findViewById(R.id.toDoColorTextView);
                     mColorImageView = (ImageView)v.findViewById(R.id.toDoListItemColorImageView);
                     linearLayout = (LinearLayout)v.findViewById(R.id.listItemLinearLayout);
+                    mtodoListItemTimeDesc=v.findViewById(R.id.todoListItemTimeDesc);
+
                 }
 
 

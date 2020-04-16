@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
 
         }
-        GO_to_Medicine = getIntent().getBooleanExtra("GO_to_Medicine", false);
+        GO_to_Medicine = getIntent().getBooleanExtra("practice", false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
             String channelId = getString(R.string.default_notification_channel_id);
@@ -116,11 +116,13 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW));
         }
+        Log.e("practice","practice"+GO_to_Medicine);
+
         if (GO_to_Medicine) {
-            toolbar.setTitle(getString(R.string.Medicine_list));
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicinesListFragmentFragment(), "HomeFragment").commit();
-        } else {
+            toolbar.setTitle(getString(R.string.Pracctice));
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(), "HomeFragment").commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicinesListFragmentFragment(), "HomeFragment").commit();
 
         }
 
@@ -148,7 +150,7 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         if (id == R.id.nav_home) {
             toolbar.setTitle(getString(R.string.menu_home));
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(), "HomeFragment").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicinesListFragmentFragment(), "HomeFragment").commit();
 
         } else if (id == R.id.nav_aboutapp) {
 
@@ -157,8 +159,8 @@ public class MainActivity extends BaseActivity  implements NavigationView.OnNavi
 
         } else if (id == R.id.nav_Medicine_list) {
 
-            toolbar.setTitle(getString(R.string.Medicine_list));
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new MedicinesListFragmentFragment(), "HomeFragment").commit();
+            toolbar.setTitle(getString(R.string.Pracctice));
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new HomeFragment(), "HomeFragment").commit();
 
         } else if (id == R.id.nav_share) {
             Intent sendIntent = new Intent();

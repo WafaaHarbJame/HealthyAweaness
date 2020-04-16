@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.healthy.healthyaweaness.DB.AnalyticsApplication;
 import com.healthy.healthyaweaness.DB.StoreRetrieveData;
+import com.healthy.healthyaweaness.Model.MedicineItem;
 import com.healthy.healthyaweaness.Model.ToDoItem;
 import com.healthy.healthyaweaness.Service.TodoNotificationService;
 import com.healthy.healthyaweaness.R;
@@ -37,8 +38,13 @@ public class ReminderActivity extends BaseActivity {
     private MaterialSpinner mSnoozeSpinner;
     private String[] snoozeOptionsArray;
     private StoreRetrieveData storeRetrieveData;
+    private StoreRetrieveData MedicineRetrieveData;
+
     private ArrayList<ToDoItem> mToDoItems;
+    private ArrayList<MedicineItem> mTMedicineItem;
+
     private ToDoItem mItem;
+    private  MedicineItem mMedicineItem;
     public static final String EXIT = "com.avjindersekhon.exit";
     private TextView mSnoozeTextView;
     String theme;
@@ -58,8 +64,12 @@ public class ReminderActivity extends BaseActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reminder_layout);
-        storeRetrieveData = new StoreRetrieveData(this, MainActivity.FILENAME);
+        storeRetrieveData = new StoreRetrieveData(this, MainActivity.FILENAME_practice);
+        MedicineRetrieveData = new StoreRetrieveData(this, MainActivity.FILENAME);
+
+
         mToDoItems = MainActivity.getLocallyStoredData(storeRetrieveData);
+        mTMedicineItem=MainActivity.getLocallyStoredMedcineData(MedicineRetrieveData);
 
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
 
@@ -68,6 +78,7 @@ public class ReminderActivity extends BaseActivity {
         Intent i = getIntent();
         UUID id = (UUID)i.getSerializableExtra(TodoNotificationService.TODOUUID);
         mItem = null;
+        mMedicineItem=null;
         for(ToDoItem toDoItem : mToDoItems){
             if (toDoItem.getIdentifier().equals(id)){
                 mItem = toDoItem;
@@ -75,16 +86,29 @@ public class ReminderActivity extends BaseActivity {
             }
         }
 
-        snoozeOptionsArray = getResources().getStringArray(R.array.snooze_options);
 
+        for(MedicineItem toDoItem : mTMedicineItem){
+            if (toDoItem.getIdentifier().equals(id)){
+                mMedicineItem = toDoItem;
+                break;
+            }
+        }
+        snoozeOptionsArray = getResources().getStringArray(R.array.snooze_options);
         mRemoveToDoButton = (Button)findViewById(R.id.toDoReminderRemoveButton);
         mtoDoTextTextView = (TextView)findViewById(R.id.toDoReminderTextViewBody);
         mSnoozeTextView = (TextView)findViewById(R.id.reminderViewSnoozeTextView);
         mSnoozeSpinner = (MaterialSpinner)findViewById(R.id.todoReminderSnoozeSpinner);
 
 //        mtoDoTextTextView.setBackgroundColor(item.getTodoColor());
-        mtoDoTextTextView.setText(mItem.getToDoText());
+        if(mItem!=null){
+            mtoDoTextTextView.setText(mItem.getToDoText());
 
+        }
+
+        if(mMedicineItem!=null){
+            mtoDoTextTextView.setText(mMedicineItem.getToDoText());
+
+        }
         if(theme.equals(MainActivity.LIGHTTHEME)){
             mSnoozeTextView.setTextColor(getResources().getColor(R.color.secondary_text));
         }
