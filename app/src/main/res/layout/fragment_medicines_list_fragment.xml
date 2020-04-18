@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent">
-    
+
     <!--<include layout="@layout/base_toolbar"/>-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/myCoordinatorLayout"

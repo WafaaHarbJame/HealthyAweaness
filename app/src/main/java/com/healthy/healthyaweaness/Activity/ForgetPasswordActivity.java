@@ -71,7 +71,6 @@ public class ForgetPasswordActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ForgetPasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         mButtonSignUpSign.setOnClickListener(new View.OnClickListener() {

@@ -194,7 +194,6 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         // اذا كان  لديه حساب ونسي كلمة المرو سوف يذهب الى شاشة تغير كلمة المرور
@@ -204,7 +203,6 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
