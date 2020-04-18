@@ -83,7 +83,6 @@
                     app:ccp_showFullName="false"
                     app:ccp_showFlag="true"
                     app:ccp_showNameCode="false"
-                    app:ccp_autoDetectLanguage="true"
                     app:ccp_defaultLanguage="ARABIC"
                     app:ccp_showPhoneCode="true" />
 

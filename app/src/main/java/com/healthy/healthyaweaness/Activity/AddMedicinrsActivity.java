@@ -549,7 +549,9 @@ public class AddMedicinrsActivity extends BaseActivity implements  DatePickerDia
             UpdateAletr(Alert_id_update,mToDoTextBodyEditText.getText().toString(),mMedicine_Description.getText().toString(),mUserHasReminder,mUserReminderDate);
 
         }
-        else {
+
+
+        else if(!mToDoTextBodyEditText.getText().toString().isEmpty()&mUserToDoItem!=null){
             addAletr(mToDoTextBodyEditText.getText().toString(),mMedicine_Description.getText().toString(),mUserHasReminder,mUserReminderDate);
 
         }

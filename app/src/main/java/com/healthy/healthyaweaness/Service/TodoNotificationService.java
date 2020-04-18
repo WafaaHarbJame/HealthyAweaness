@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.healthy.healthyaweaness.Activity.ReminderActivity;
+import com.healthy.healthyaweaness.MainActivity;
 import com.healthy.healthyaweaness.R;
 
 import java.util.UUID;
@@ -41,7 +42,7 @@ public class TodoNotificationService extends IntentService {
         Log.d("OskarSchindler", "onHandleIntent called");
 
         NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        Intent i = new Intent(this, ReminderActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         i.putExtra(TodoNotificationService.TODOUUID, mTodoUUID);
         Intent deleteIntent = new Intent(this, DeleteNotificationService.class);
         deleteIntent.putExtra(TODOUUID, mTodoUUID);

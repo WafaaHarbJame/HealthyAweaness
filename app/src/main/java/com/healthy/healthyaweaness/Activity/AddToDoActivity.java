@@ -513,8 +513,8 @@ public class AddToDoActivity extends BaseActivity implements  DatePickerDialog.O
             UpdateAletr(Alert_id_update,mUserEnteredText,mUserHasReminder,mUserReminderDate);
 
         }
-        else {
-            if(!mToDoTextBodyEditText.getText().toString().isEmpty()){
+        else  if(!mToDoTextBodyEditText.getText().toString().isEmpty()&mUserToDoItem!=null){
+            if(!mToDoTextBodyEditText.getText().toString().isEmpty()&mUserToDoItem!=null){
                 addAletr(mToDoTextBodyEditText.getText().toString(),mUserHasReminder,mUserReminderDate);
 
             }

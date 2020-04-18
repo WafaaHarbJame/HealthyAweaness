@@ -59,7 +59,7 @@
 
     <string name="todo_error">ادخل عنوان التذكير</string>
     <string name="night_mode_pref_key">night_mode_</string>
-    <string name="example">example</string>
+    <string name="example">تذكير</string>
     <string name="aboutmyapp">aboutmyapp</string>
     <string name="abouappp">aboutmyapp</string>
     <string name="email_address">email_address</string>
